@@ -7,7 +7,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HackMate - Find Your Perfect Hackathon Teammate",
+  title: "Team-Up - Find Your Perfect Hackathon Teammate",
   description:
     "Connect with skilled developers, designers, and innovators to build winning projects at hackathons worldwide.",
 };
