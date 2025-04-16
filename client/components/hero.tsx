@@ -1,9 +1,9 @@
 import { ArrowRight, Code, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { Button } from "@/client/components/ui/button";
-import { HeroBackground } from "@/client/components/hero-background";
-import { AnimatedGradient } from "@/client/components/animated-gradient";
+import { Button } from "@/components/ui/button";
+import { HeroBackground } from "@/components/hero-background";
+import { AnimatedGradient } from "@/components/animated-gradient";
 
 const Hero = () => {
   return (

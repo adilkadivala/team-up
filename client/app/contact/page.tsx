@@ -1,8 +1,8 @@
-import Link from "next/link"
-import { Button } from "@/client/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Users, Mail, Phone, MapPin } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Users, Mail, Phone, MapPin } from "lucide-react";
 
 export default function ContactPage() {
   return (
@@ -16,7 +16,10 @@ export default function ContactPage() {
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary">
+            <Link
+              href="/"
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+            >
               Home
             </Link>
             <Link
@@ -25,7 +28,10 @@ export default function ContactPage() {
             >
               About
             </Link>
-            <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
+            <Link
+              href="/contact"
+              className="text-sm font-medium transition-colors hover:text-primary"
+            >
               Contact
             </Link>
           </nav>
@@ -46,7 +52,9 @@ export default function ContactPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Contact Us</h1>
+                <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
+                  Contact Us
+                </h1>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                   Have questions or feedback? We'd love to hear from you.
                 </p>
@@ -60,9 +68,12 @@ export default function ContactPage() {
             <div className="grid gap-12 md:grid-cols-2">
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-3xl font-bold tracking-tighter mb-4">Get in Touch</h2>
+                  <h2 className="text-3xl font-bold tracking-tighter mb-4">
+                    Get in Touch
+                  </h2>
                   <p className="text-muted-foreground">
-                    We're here to help with any questions about our platform, features, or how to get started.
+                    We're here to help with any questions about our platform,
+                    features, or how to get started.
                   </p>
                 </div>
 
@@ -71,7 +82,9 @@ export default function ContactPage() {
                     <Mail className="h-5 w-5 mt-0.5 text-primary" />
                     <div>
                       <h3 className="font-medium">Email</h3>
-                      <p className="text-sm text-muted-foreground">support@hackmate.example.com</p>
+                      <p className="text-sm text-muted-foreground">
+                        support@hackmate.example.com
+                      </p>
                     </div>
                   </div>
 
@@ -79,7 +92,9 @@ export default function ContactPage() {
                     <Phone className="h-5 w-5 mt-0.5 text-primary" />
                     <div>
                       <h3 className="font-medium">Phone</h3>
-                      <p className="text-sm text-muted-foreground">+1 (555) 123-4567</p>
+                      <p className="text-sm text-muted-foreground">
+                        +1 (555) 123-4567
+                      </p>
                     </div>
                   </div>
 
@@ -101,7 +116,10 @@ export default function ContactPage() {
                 <div className="space-y-4">
                   <h3 className="text-xl font-bold">Follow Us</h3>
                   <div className="flex gap-4">
-                    <Link href="#" className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground"
+                    >
                       <span className="sr-only">Twitter</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +136,10 @@ export default function ContactPage() {
                         <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                       </svg>
                     </Link>
-                    <Link href="#" className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground"
+                    >
                       <span className="sr-only">GitHub</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +157,10 @@ export default function ContactPage() {
                         <path d="M9 18c-4.51 2-5-2-7-2" />
                       </svg>
                     </Link>
-                    <Link href="#" className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground">
+                    <Link
+                      href="#"
+                      className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground"
+                    >
                       <span className="sr-only">LinkedIn</span>
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -170,7 +194,10 @@ export default function ContactPage() {
                       >
                         First name
                       </label>
-                      <Input id="first-name" placeholder="Enter your first name" />
+                      <Input
+                        id="first-name"
+                        placeholder="Enter your first name"
+                      />
                     </div>
                     <div className="space-y-2">
                       <label
@@ -179,7 +206,10 @@ export default function ContactPage() {
                       >
                         Last name
                       </label>
-                      <Input id="last-name" placeholder="Enter your last name" />
+                      <Input
+                        id="last-name"
+                        placeholder="Enter your last name"
+                      />
                     </div>
                   </div>
 
@@ -190,7 +220,11 @@ export default function ContactPage() {
                     >
                       Email
                     </label>
-                    <Input id="email" type="email" placeholder="Enter your email" />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="Enter your email"
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -210,7 +244,11 @@ export default function ContactPage() {
                     >
                       Message
                     </label>
-                    <Textarea id="message" placeholder="Enter your message" className="min-h-[120px]" />
+                    <Textarea
+                      id="message"
+                      placeholder="Enter your message"
+                      className="min-h-[120px]"
+                    />
                   </div>
 
                   <Button type="submit" className="w-full">
@@ -226,7 +264,9 @@ export default function ContactPage() {
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter">Frequently Asked Questions</h2>
+                <h2 className="text-3xl font-bold tracking-tighter">
+                  Frequently Asked Questions
+                </h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground">
                   Find answers to common questions about HackMate.
                 </p>
@@ -269,20 +309,30 @@ export default function ContactPage() {
               <span className="font-semibold">HackMate</span>
             </Link>
             <p className="text-sm text-muted-foreground">
-              Find your perfect hackathon teammate. Build amazing projects together.
+              Find your perfect hackathon teammate. Build amazing projects
+              together.
             </p>
           </div>
           <div className="flex flex-col gap-4 md:flex-row md:gap-6 lg:gap-8">
             <div className="space-y-2">
               <h4 className="font-medium">Platform</h4>
               <nav className="flex flex-col gap-2">
-                <Link href="/browse" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/browse"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Browse Teammates
                 </Link>
-                <Link href="/hackathons" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/hackathons"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Hackathons
                 </Link>
-                <Link href="/projects" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/projects"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Projects
                 </Link>
               </nav>
@@ -290,13 +340,22 @@ export default function ContactPage() {
             <div className="space-y-2">
               <h4 className="font-medium">Company</h4>
               <nav className="flex flex-col gap-2">
-                <Link href="/about" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/about"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   About
                 </Link>
-                <Link href="/contact" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/contact"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Contact
                 </Link>
-                <Link href="/careers" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/careers"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Careers
                 </Link>
               </nav>
@@ -304,10 +363,16 @@ export default function ContactPage() {
             <div className="space-y-2">
               <h4 className="font-medium">Legal</h4>
               <nav className="flex flex-col gap-2">
-                <Link href="/privacy" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/privacy"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Privacy Policy
                 </Link>
-                <Link href="/terms" className="text-sm text-muted-foreground hover:text-foreground">
+                <Link
+                  href="/terms"
+                  className="text-sm text-muted-foreground hover:text-foreground"
+                >
                   Terms of Service
                 </Link>
               </nav>
@@ -323,5 +388,5 @@ export default function ContactPage() {
         </div>
       </footer>
     </div>
-  )
+  );
 }

@@ -1,19 +1,18 @@
 import React from "react";
-import { Button } from "@/client/components/ui/button";
-import { ArrowRight, Code, Sparkles, Users, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Code, Sparkles, Users, Zap } from "lucide-react";
 import { StepCard } from "./step-card";
-import Link from "next/link";
 
 const Workflow = () => {
   return (
     <section className="py-5 bg-muted/30 relative overflow-hidden">
-      <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
+      <div className="flex justify-center items-center ">
+        <span className="rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6 w-1/12">
+          How It Works
+        </span>
+      </div>
+
       <div className="container px-4 relative">
-        <div className="flex items-center justify-center rounded-lg bg-primary/10 px-3 py-1 text-sm text-primary mb-4">
-          <span className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold">
-            How It Works
-          </span>
-        </div>
         <div className="grid gap-12 md:grid-cols-2 items-center">
           <div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-6">
@@ -127,7 +126,9 @@ const Workflow = () => {
                 </div>
 
                 <div className="mt-6">
-                  <Button className="w-full">Connect with Teammates</Button>
+                  <Button className="w-full cursor-pointer">
+                    Connect with Teammates
+                  </Button>
                 </div>
               </div>
             </div>
