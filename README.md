@@ -1,36 +1,111 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 Hackathon Teammate Finder
 
-## Getting Started
+A full-stack project using **Next.js** for the frontend and **Express.js** for the backend to help users find teammates for hackathons.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🧾 Folder Structure
+
+```
+project/
+├── client/          # 🎨 Next.js frontend
+│   ├── app/         # Pages (e.g., page.tsx)
+│   ├── components/  # Reusable React components
+│   ├── public/      # Static assets
+│   ├── styles/      # Tailwind & global styles
+│   ├── package.json # Frontend dependencies
+│   └── tsconfig.json
+├── server/          # ⚙️ Express.js backend
+│   ├── routes/      # API endpoints (e.g., profile.js)
+│   ├── config/      # Database configuration
+│   ├── package.json # Backend dependencies
+│   └── server.js    # Main Express server file
+└── README.md        # 📘 Project documentation
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Getting Started
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 📌 Prerequisites
 
-## Learn More
+- [Node.js](https://nodejs.org/) (v18 or later)
+- [MySQL](https://www.mysql.com/) (for the database)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🖥️ Project Setup
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 🔹 Client (Next.js)
 
-## Deploy on Vercel
+```bash
+cd client
+pnpm install       # or yarn / pnpm / bun
+pnpm run dev       # or yarn dev / pnpm dev / bun dev
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+➡️ Open [http://localhost:3000](http://localhost:3000) to view in your browser.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+### 🔸 Server (Express.js)
+
+```bash
+cd server
+pnpm install express cors mysql2
+```
+
+🛠️ Set up a MySQL database (e.g., `teammate_finder`) and update your credentials in `server/config/db.js`.
+
+```bash
+node server.js
+```
+
+➡️ Backend runs at [http://localhost:5000](http://localhost:5000)
+
+---
+
+## 🧩 Tech Stack
+
+- ⚡ **Next.js** with **TypeScript**
+- 🎯 **Express.js** with **MySQL**
+- 💨 **Tailwind CSS** for styling
+- 🧱 **shadcn/ui** for reusable components
+
+---
+
+## 🧪 Development Notes
+
+You can start editing the frontend in `client/app/page.tsx` – hot reload is enabled.  
+The backend can be tested using tools like Postman at the API endpoints in `server/routes`.
+
+---
+
+## 📚 Learn More
+
+- 📘 [Next.js Documentation](https://nextjs.org/docs)
+- 📘 [Express.js Documentation](https://expressjs.com/)
+- 📘 [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- 🧑‍💻 [Learn Next.js](https://nextjs.org/learn)
+
+---
+
+## 🚀 Deployment
+
+- 🌐 **Frontend (Next.js):** Deploy easily using [Vercel](https://vercel.com/)
+- 🔧 **Backend (Express.js):** Deploy on [Render](https://render.com/) or [Heroku](https://www.heroku.com/)
+
+Refer to the deployment guide or setup scripts for smooth CI/CD integration.
+
+---
+
+## 📤 Submission Guidelines
+
+- ✅ **GitHub:** Submit your repository URL with complete source code and example `.env` if applicable.
+- 🔗 **Live Demo:** Include a deployed link (e.g., Vercel URL).
+- 📞 **Contact Info:** Add your Telegram ID, Twitter ID, and contact number.
+
+---
+
+## ⭐ Like this project?
+
+Drop a star ⭐ on the repo if this helped you. Contributions and feedback are welcome!

@@ -19,40 +19,40 @@ export function MobileNav() {
       </SheetTrigger>
       <SheetContent side="left" className="flex flex-col">
         <SheetHeader>
-          <SheetTitle>menu items</SheetTitle>
+          <SheetTitle>pages</SheetTitle>
         </SheetHeader>
         <div className="flex flex-col space-y-4 mt-8">
           <Link
             href="/"
-            className="text-lg font-medium transition-colors hover:text-primary"
+            className="text-lg font-medium hover:text-primary"
             onClick={() => setOpen(false)}
           >
             Home
           </Link>
           <Link
             href="/about"
-            className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+            className="text-lg font-medium text-muted-foreground hover:text-primary"
             onClick={() => setOpen(false)}
           >
             About
           </Link>
           <Link
             href="/contact"
-            className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+            className="text-lg font-medium text-muted-foreground hover:text-primary"
             onClick={() => setOpen(false)}
           >
             Contact
           </Link>
           <Link
             href="/browse"
-            className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+            className="text-lg font-medium text-muted-foreground hover:text-primary"
             onClick={() => setOpen(false)}
           >
             Browse Teammates
           </Link>
           <Link
             href="/hackathons"
-            className="text-lg font-medium text-muted-foreground transition-colors hover:text-primary"
+            className="text-lg font-medium text-muted-foreground hover:text-primary"
             onClick={() => setOpen(false)}
           >
             Hackathons
