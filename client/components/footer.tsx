@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="flex flex-col gap-2">
           <Link href="/" className="flex items-center gap-2">
             <Users className="h-5 w-5" />
-            <span className="font-semibold">HackMate</span>
+            <span className="font-semibold">Team-up</span>
           </Link>
           <p className="text-sm text-muted-foreground">
             Find your perfect hackathon teammate. Build amazing projects
@@ -85,7 +85,7 @@ const Footer = () => {
       <div className="border-t py-6">
         <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
           <p className="text-center text-sm text-muted-foreground md:text-left">
-            © {new Date().getFullYear()} HackMate. All rights reserved.
+            © {new Date().getFullYear()} Team-up. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
             <Link

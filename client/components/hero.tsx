@@ -21,8 +21,8 @@ const Hero = () => {
             </p>
           </div>
           <p className="mt-6 text-lg text-muted-foreground md:text-xl max-w-2xl mx-auto">
-            HackMate helps you find skilled developers, designers, and
-            innovators to build winning projects at hackathons worldwide.
+            Team-up helps you find skilled developers, designers, and innovators
+            to build winning projects at hackathons worldwide.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <Link href="/signup">
@@ -31,7 +31,11 @@ const Hero = () => {
               </Button>
             </Link>
             <Link href="/browse">
-              <Button size="lg" variant="outline" className="h-12 px-8 cursor-pointer">
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-12 px-8 cursor-pointer"
+              >
                 Browse Teammates
               </Button>
             </Link>

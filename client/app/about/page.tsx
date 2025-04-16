@@ -10,7 +10,7 @@ export default function AboutPage() {
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-6 w-6" />
-              <span className="font-bold">HackMate</span>
+              <span className="font-bold">Team-up</span>
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -51,7 +51,7 @@ export default function AboutPage() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">
-                  About HackMate
+                  About Team-up
                 </h1>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                   Connecting innovators to build amazing projects together.
@@ -69,7 +69,7 @@ export default function AboutPage() {
                   Our Mission
                 </h2>
                 <p className="text-muted-foreground mb-6">
-                  At HackMate, we believe that the best innovations come from
+                  At Team-up, we believe that the best innovations come from
                   diverse teams with complementary skills. Our mission is to
                   connect talented individuals from around the world to form the
                   perfect teams for hackathons and collaborative projects.
@@ -110,7 +110,7 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">The Beginning</h3>
                 <p className="text-muted-foreground">
-                  HackMate was born out of a common frustration experienced by
+                  Team-up was born out of a common frustration experienced by
                   our founders at hackathons: finding the right teammates with
                   complementary skills. After struggling to form balanced teams
                   at several events, they decided to build a solution that would
@@ -129,7 +129,7 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <h3 className="text-xl font-bold">Today</h3>
                 <p className="text-muted-foreground">
-                  Today, HackMate connects thousands of developers, designers,
+                  Today, Team-up connects thousands of developers, designers,
                   and innovators across the globe. We're proud to have
                   facilitated countless successful collaborations and
                   award-winning hackathon projects.
@@ -144,7 +144,7 @@ export default function AboutPage() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
               <h2 className="text-3xl font-bold tracking-tighter">Our Team</h2>
               <p className="mx-auto max-w-[700px] text-muted-foreground">
-                Meet the passionate individuals behind HackMate.
+                Meet the passionate individuals behind Team-up.
               </p>
             </div>
             <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
@@ -194,7 +194,7 @@ export default function AboutPage() {
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              <span className="font-semibold">HackMate</span>
+              <span className="font-semibold">Team-up</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               Find your perfect hackathon teammate. Build amazing projects
@@ -270,7 +270,7 @@ export default function AboutPage() {
         <div className="border-t py-6">
           <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} HackMate. All rights reserved.
+              © {new Date().getFullYear()} Team-up. All rights reserved.
             </p>
           </div>
         </div>

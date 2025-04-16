@@ -10,7 +10,7 @@ export default function TermsPage() {
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-6 w-6" />
-              <span className="font-bold">HackMate</span>
+              <span className="font-bold">Team-up</span>
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -67,7 +67,7 @@ export default function TermsPage() {
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold">1. Acceptance of Terms</h2>
                 <p className="text-muted-foreground">
-                  By accessing or using the HackMate platform, you agree to be
+                  By accessing or using the Team-up platform, you agree to be
                   bound by these Terms of Service and all applicable laws and
                   regulations. If you do not agree with any of these terms, you
                   are prohibited from using or accessing this site.
@@ -77,7 +77,7 @@ export default function TermsPage() {
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold">2. Use License</h2>
                 <p className="text-muted-foreground">
-                  Permission is granted to temporarily use the HackMate platform
+                  Permission is granted to temporarily use the Team-up platform
                   for personal, non-commercial transitory viewing only. This is
                   the grant of a license, not a transfer of title, and under
                   this license you may not:
@@ -90,7 +90,7 @@ export default function TermsPage() {
                   </li>
                   <li>
                     Attempt to reverse engineer any software contained on the
-                    HackMate platform
+                    Team-up platform
                   </li>
                   <li>
                     Remove any copyright or other proprietary notations from the
@@ -103,7 +103,7 @@ export default function TermsPage() {
                 </ul>
                 <p className="text-muted-foreground">
                   This license shall automatically terminate if you violate any
-                  of these restrictions and may be terminated by HackMate at any
+                  of these restrictions and may be terminated by Team-up at any
                   time.
                 </p>
               </div>
@@ -185,12 +185,12 @@ export default function TermsPage() {
                 <p className="text-muted-foreground">
                   The platform and its original content (excluding content
                   provided by users), features, and functionality are and will
-                  remain the exclusive property of HackMate and its licensors.
+                  remain the exclusive property of Team-up and its licensors.
                   The platform is protected by copyright, trademark, and other
                   laws of both the United States and foreign countries. Our
                   trademarks and trade dress may not be used in connection with
                   any product or service without the prior written consent of
-                  HackMate.
+                  Team-up.
                 </p>
               </div>
 
@@ -215,7 +215,7 @@ export default function TermsPage() {
                   8. Limitation of Liability
                 </h2>
                 <p className="text-muted-foreground">
-                  In no event shall HackMate, nor its directors, employees,
+                  In no event shall Team-up, nor its directors, employees,
                   partners, agents, suppliers, or affiliates, be liable for any
                   indirect, incidental, special, consequential or punitive
                   damages, including without limitation, loss of profits, data,
@@ -243,10 +243,10 @@ export default function TermsPage() {
                   at:
                 </p>
                 <div className="text-muted-foreground">
-                  <p>HackMate</p>
+                  <p>Team-up</p>
                   <p>123 Innovation Street</p>
                   <p>Tech City, TC 12345</p>
-                  <p>Email: legal@hackmate.example.com</p>
+                  <p>Email: legal@Team-up.example.com</p>
                 </div>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function TermsPage() {
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              <span className="font-semibold">HackMate</span>
+              <span className="font-semibold">Team-up</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               Find your perfect hackathon teammate. Build amazing projects
@@ -334,7 +334,7 @@ export default function TermsPage() {
         <div className="border-t py-6">
           <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} HackMate. All rights reserved.
+              © {new Date().getFullYear()} Team-up. All rights reserved.
             </p>
           </div>
         </div>

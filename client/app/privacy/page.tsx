@@ -10,7 +10,7 @@ export default function PrivacyPage() {
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-6 w-6" />
-              <span className="font-bold">HackMate</span>
+              <span className="font-bold">Team-up</span>
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
               <div className="space-y-4">
                 <h2 className="text-2xl font-bold">Introduction</h2>
                 <p className="text-muted-foreground">
-                  At HackMate, we take your privacy seriously. This Privacy Policy explains how we collect, use,
+                  At Team-up, we take your privacy seriously. This Privacy Policy explains how we collect, use,
                   disclose, and safeguard your information when you visit our website and use our services. Please read
                   this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do
                   not access the site.
@@ -114,7 +114,7 @@ export default function PrivacyPage() {
                   </li>
                   <li>
                     If we believe your actions are inconsistent with our user agreements or policies, or to protect the
-                    rights, property, and safety of HackMate or others
+                    rights, property, and safety of Team-up or others
                   </li>
                   <li>
                     In connection with, or during negotiations of, any merger, sale of company assets, financing, or
@@ -158,10 +158,10 @@ export default function PrivacyPage() {
                   If you have any questions about this privacy policy or our practices, please contact us at:
                 </p>
                 <div className="text-muted-foreground">
-                  <p>HackMate</p>
+                  <p>Team-up</p>
                   <p>123 Innovation Street</p>
                   <p>Tech City, TC 12345</p>
-                  <p>Email: privacy@hackmate.example.com</p>
+                  <p>Email: privacy@Team-up.example.com</p>
                 </div>
               </div>
             </div>
@@ -173,7 +173,7 @@ export default function PrivacyPage() {
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              <span className="font-semibold">HackMate</span>
+              <span className="font-semibold">Team-up</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               Find your perfect hackathon teammate. Build amazing projects together.
@@ -224,7 +224,7 @@ export default function PrivacyPage() {
         <div className="border-t py-6">
           <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} HackMate. All rights reserved.
+              © {new Date().getFullYear()} Team-up. All rights reserved.
             </p>
           </div>
         </div>

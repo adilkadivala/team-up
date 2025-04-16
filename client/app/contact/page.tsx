@@ -12,7 +12,7 @@ export default function ContactPage() {
           <div className="flex items-center gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-6 w-6" />
-              <span className="font-bold">HackMate</span>
+              <span className="font-bold">Team-up</span>
             </Link>
           </div>
           <nav className="hidden md:flex items-center gap-6">
@@ -83,7 +83,7 @@ export default function ContactPage() {
                     <div>
                       <h3 className="font-medium">Email</h3>
                       <p className="text-sm text-muted-foreground">
-                        support@hackmate.example.com
+                        support@Team-up.example.com
                       </p>
                     </div>
                   </div>
@@ -268,7 +268,7 @@ export default function ContactPage() {
                   Frequently Asked Questions
                 </h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground">
-                  Find answers to common questions about HackMate.
+                  Find answers to common questions about Team-up.
                 </p>
               </div>
             </div>
@@ -280,16 +280,16 @@ export default function ContactPage() {
                   a: "You can use our search filters to find users who have expressed interest in the same hackathon. Simply navigate to the 'Browse' page and use the hackathon filter.",
                 },
                 {
-                  q: "Is HackMate free to use?",
-                  a: "Yes, HackMate is completely free for basic use. We offer premium features for power users who need advanced matching and team management tools.",
+                  q: "Is Team-up free to use?",
+                  a: "Yes, Team-up is completely free for basic use. We offer premium features for power users who need advanced matching and team management tools.",
                 },
                 {
                   q: "How can I list my skills on my profile?",
                   a: "After signing up, you can edit your profile to add your skills, experience level, and the technologies you're familiar with. This helps others find you based on your expertise.",
                 },
                 {
-                  q: "Can I use HackMate for virtual/online hackathons?",
-                  a: "HackMate is designed for both in-person and virtual hackathons. You can specify your preference for remote collaboration in your profile.",
+                  q: "Can I use Team-up for virtual/online hackathons?",
+                  a: "Team-up is designed for both in-person and virtual hackathons. You can specify your preference for remote collaboration in your profile.",
                 },
               ].map((faq, i) => (
                 <div key={i} className="rounded-lg border bg-background p-6">
@@ -306,7 +306,7 @@ export default function ContactPage() {
           <div className="flex flex-col gap-2">
             <Link href="/" className="flex items-center gap-2">
               <Users className="h-5 w-5" />
-              <span className="font-semibold">HackMate</span>
+              <span className="font-semibold">Team-up</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               Find your perfect hackathon teammate. Build amazing projects
@@ -382,7 +382,7 @@ export default function ContactPage() {
         <div className="border-t py-6">
           <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
             <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} HackMate. All rights reserved.
+              © {new Date().getFullYear()} Team-up. All rights reserved.
             </p>
           </div>
         </div>
