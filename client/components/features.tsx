@@ -1,5 +1,5 @@
 import React from "react";
-import { FeatureCard } from "@/components/feature-card";
+import { FeatureCard } from "@/client/components/feature-card";
 import {
   Calendar,
   Code,

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Button } from "@/components/ui/button"
+import { Button } from "@/client/components/ui/button"
 import { Users } from "lucide-react"
 
 export default function PrivacyPage() {

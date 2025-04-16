@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/client/components/ui/button";
 import { Sparkles } from "lucide-react";
 
 const GetReady = () => {

@@ -1,9 +1,9 @@
 import { Users } from "lucide-react";
 import Link from "next/link";
 import React from "react";
-import { ModeToggle } from "@/components/mode-toggle";
-import { Button } from "@/components/ui/button";
-import { MobileNav } from "@/components/mobile-nav";
+import { ModeToggle } from "@/client/components/mode-toggle";
+import { Button } from "@/client/components/ui/button";
+import { MobileNav } from "@/client/components/mobile-nav";
 
 const Navbar = () => {
   return (

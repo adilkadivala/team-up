@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/client/components/ui/button";
 import { ArrowRight, Code, Sparkles, Users, Zap } from "lucide-react";
 import { StepCard } from "./step-card";
 import Link from "next/link";
