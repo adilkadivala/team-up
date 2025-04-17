@@ -5,14 +5,11 @@ import { StepCard } from "./step-card";
 
 const Workflow = () => {
   return (
-    <section className="py-5 bg-muted/30 relative overflow-hidden">
-      <div className="flex justify-center items-center ">
-        <span className="rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6 w-1/12">
+    <section className="py-5 relative overflow-hidden">
+      <div className="container px-4 bg-muted/5">
+        <div className="mx-auto w-fit align-middle text-center rounded-full bg-primary/10 px-4 py-1.5 text-sm font-medium text-primary mb-6">
           How It Works
-        </span>
-      </div>
-
-      <div className="container px-4 relative">
+        </div>
         <div className="grid gap-12 md:grid-cols-2 items-center">
           <div>
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl mb-6">

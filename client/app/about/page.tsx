@@ -1,50 +1,13 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Users, Lightbulb } from "lucide-react";
+import { Lightbulb } from "lucide-react";
+import Navbar from "@/components/navbar";
+import Footer from "@/components/footer";
 
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Link href="/" className="flex items-center gap-2">
-              <Users className="h-6 w-6" />
-              <span className="font-bold">Team-up</span>
-            </Link>
-          </div>
-          <nav className="hidden md:flex items-center gap-6">
-            <Link
-              href="/"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              Home
-            </Link>
-            <Link
-              href="/about"
-              className="text-sm font-medium transition-colors hover:text-primary"
-            >
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              Contact
-            </Link>
-          </nav>
-          <div className="flex items-center gap-4">
-            <Link href="/login">
-              <Button variant="outline" size="sm" className="hidden md:flex">
-                Log in
-              </Button>
-            </Link>
-            <Link href="/signup">
-              <Button size="sm">Sign up</Button>
-            </Link>
-          </div>
-        </div>
-      </header>
+      <Navbar />
       <main className="flex-1">
         <section className="bg-muted/50 py-20 md:py-32">
           <div className="container px-4 md:px-6">
@@ -189,92 +152,7 @@ export default function AboutPage() {
           </div>
         </section>
       </main>
-      <footer className="border-t bg-background">
-        <div className="container flex flex-col gap-6 py-8 md:flex-row md:items-center md:justify-between md:py-12">
-          <div className="flex flex-col gap-2">
-            <Link href="/" className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              <span className="font-semibold">Team-up</span>
-            </Link>
-            <p className="text-sm text-muted-foreground">
-              Find your perfect hackathon teammate. Build amazing projects
-              together.
-            </p>
-          </div>
-          <div className="flex flex-col gap-4 md:flex-row md:gap-6 lg:gap-8">
-            <div className="space-y-2">
-              <h4 className="font-medium">Platform</h4>
-              <nav className="flex flex-col gap-2">
-                <Link
-                  href="/browse"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Browse Teammates
-                </Link>
-                <Link
-                  href="/hackathons"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Hackathons
-                </Link>
-                <Link
-                  href="/projects"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Projects
-                </Link>
-              </nav>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-medium">Company</h4>
-              <nav className="flex flex-col gap-2">
-                <Link
-                  href="/about"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  About
-                </Link>
-                <Link
-                  href="/contact"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Contact
-                </Link>
-                <Link
-                  href="/careers"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Careers
-                </Link>
-              </nav>
-            </div>
-            <div className="space-y-2">
-              <h4 className="font-medium">Legal</h4>
-              <nav className="flex flex-col gap-2">
-                <Link
-                  href="/privacy"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Privacy Policy
-                </Link>
-                <Link
-                  href="/terms"
-                  className="text-sm text-muted-foreground hover:text-foreground"
-                >
-                  Terms of Service
-                </Link>
-              </nav>
-            </div>
-          </div>
-        </div>
-        <div className="border-t py-6">
-          <div className="container flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-center text-sm text-muted-foreground md:text-left">
-              © {new Date().getFullYear()} Team-up. All rights reserved.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
