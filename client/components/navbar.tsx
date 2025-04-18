@@ -41,10 +41,10 @@ const Navbar = () => {
         </nav>
         <div className="flex items-center gap-4">
           <ModeToggle />
-          <div className="hidden md:flex items-center gap-4">
-            <Link href={isSignedIn ? "/console" : "/sign-in"}>
+          <div className="hidden md:flex items-center gap-4 cursor-pointer">
+            <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
               <Button variant="outline" size="sm">
-                {isSignedIn ? "console" : "Login"}
+                {isSignedIn ? "dashboard" : "Login"}
               </Button>
             </Link>
           </div>

@@ -12,7 +12,7 @@ export default function Page() {
 
   useEffect(() => {
     if (isLoaded && isSignedIn) {
-      router.push("/console");
+      router.push("/dashboard");
     }
   }, [isSignedIn, isLoaded, router]);
 
@@ -38,8 +38,8 @@ export default function Page() {
             <SignIn
               path="/sign-in"
               routing="path"
-              afterSignInUrl="/console"
-              redirectUrl="/console"
+              afterSignInUrl="/dashboard"
+              redirectUrl="/dashboard"
             />
           </ClerkLoaded>
           <ClerkLoading>
