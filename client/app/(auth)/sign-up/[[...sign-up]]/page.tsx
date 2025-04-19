@@ -7,9 +7,11 @@ export default function Page() {
     <div className="min-h-screen grid grid-cols-1 lg:grid-cols-2">
       <div className="h-full lg:flex flex-col items-center justify-center px-4">
         <div className="text-center space-y-4 pt-16">
-          <h1 className="font-bold text-3xl text-[#2e2a47]">Welcome Back</h1>
-          <p className="text-base text-[#7e8ca0]">
-            Log in or create account to get back to your dashboard!
+          <h1 className="font-bold text-3xl text-gray-600 dark:text-gray-300">
+            Welcome to Team-Up
+          </h1>
+          <p className="text-base text-gray-600 dark:text-gray-300">
+            create account to Team-Up With Other Devs!
           </p>
         </div>
         <div className="flex items-center justify-center mt-8">

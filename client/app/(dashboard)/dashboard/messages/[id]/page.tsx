@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MessageList } from "@/components/message-list";
 import { Send } from "lucide-react";
+import { use } from "react";
 
 // Mock data
 const conversations = [
@@ -103,15 +104,17 @@ const messageHistory = {
 export default function ConversationPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = use(params);
+
   const [newMessage, setNewMessage] = useState("");
   const [messages, setMessages] = useState(
-    messageHistory[params.id as keyof typeof messageHistory] || []
+    messageHistory[id as keyof typeof messageHistory] || []
   );
 
   const conversation =
-    conversations.find((c) => c.id === params.id) || conversations[0];
+    conversations.find((c) => c.id === id) || conversations[0];
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -146,7 +149,7 @@ export default function ConversationPage({
           <div className="mb-4">
             <h2 className="text-lg font-semibold">Conversations</h2>
           </div>
-          <MessageList conversations={conversations} activeId={params.id} />
+          <MessageList conversations={conversations} activeId={id} />
         </div>
 
         <div className="flex flex-col h-[600px]">

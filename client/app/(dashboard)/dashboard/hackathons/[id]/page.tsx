@@ -17,6 +17,7 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import Link from "next/link";
+import { use } from "react";
 
 // Mock data
 const hackathons = {
@@ -63,13 +64,14 @@ const hackathons = {
   },
 };
 
-export default async function HackathonDetailPage({
+export default function HackathonDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  // Ensure params.id is properly typed and used
-  const hackathon = hackathons[params.id as keyof typeof hackathons];
+  
+  const { id } = use(params);
+  const hackathon = hackathons[id as keyof typeof hackathons];
 
   if (!hackathon) {
     return (
@@ -192,7 +194,7 @@ export default async function HackathonDetailPage({
             {hackathon.interestedUsers.map((user) => (
               <div key={user.id} className="flex items-center gap-3">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage alt={user.name} />
+                  <AvatarImage src="/user.svg" alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>
