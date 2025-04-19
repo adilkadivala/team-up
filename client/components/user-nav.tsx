@@ -13,8 +13,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import Link from "next/link";
+import { useClerk, useUser } from "@clerk/nextjs";
 
 export function UserNav() {
+  const { user } = useUser();
+  const { signOut } = useClerk();
   return (
     <div className="flex items-center gap-4">
       <ModeToggle />
@@ -31,9 +34,11 @@ export function UserNav() {
         <DropdownMenuContent className="w-56" align="end" forceMount>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
-              <p className="text-sm font-medium leading-none">John Doe</p>
+              <p className="text-sm font-medium leading-none">
+                {user?.fullName}
+              </p>
               <p className="text-xs leading-none text-muted-foreground">
-                john.doe@example.com
+                {user?.emailAddresses[0]?.emailAddress}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -48,7 +53,13 @@ export function UserNav() {
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild>
-            <Link href="/">Log out</Link>
+            <Button
+              variant="outline"
+              className="w-full justify-start gap-2 cursor-pointer"
+              onClick={() => signOut({ redirectUrl: "/" })}
+            >
+              Logout
+            </Button>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

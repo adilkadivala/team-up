@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useClerk } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
@@ -11,9 +12,10 @@ import {
   Settings,
   UserCircle,
   LogOut,
+  LogOutIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ClerkProvider, RedirectToSignIn, SignedOut } from "@clerk/nextjs";
+[];
 
 const sidebarItems = [
   {
@@ -50,6 +52,7 @@ const sidebarItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
+  const { signOut } = useClerk();
 
   return (
     <div className="hidden md:flex flex-col h-screen w-64 border-r bg-background">
@@ -84,14 +87,11 @@ export function Sidebar() {
       <div className="mt-auto p-4">
         <Button
           variant="outline"
-          className="w-full justify-start gap-2"
-          asChild
+          className="w-full justify-start gap-2 cursor-pointer"
+          onClick={() => signOut({ redirectUrl: "/" })}
         >
-          <ClerkProvider>
-            <SignedOut>
-              <RedirectToSignIn />
-            </SignedOut>
-          </ClerkProvider>
+          <LogOutIcon className="h-4 w-4" />
+          Logout
         </Button>
       </div>
     </div>

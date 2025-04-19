@@ -15,7 +15,6 @@ import { Badge } from "@/components/ui/badge";
 import { SkillBadge } from "@/components/skill-badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin, Globe, Calendar, Plus, X } from "lucide-react";
-import { User } from "@/public";
 
 export default function ProfilePage() {
   // Mock data
@@ -78,7 +77,7 @@ export default function ProfilePage() {
               <CardContent className="space-y-6">
                 <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage src={User} alt="Profile" />
+                    <AvatarImage src="/user.svg" alt="Profile" />
                     <AvatarFallback>JD</AvatarFallback>
                   </Avatar>
                   <Button>Change Avatar</Button>
