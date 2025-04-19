@@ -14,7 +14,7 @@ const conversations = [
   {
     id: "1",
     name: "Alex Johnson",
-    avatar: "/placeholder.svg",
+    avatar: "/user.svg",
     lastMessage:
       "Hey, I saw your profile and I'm interested in teaming up for the Global AI Hackathon.",
     time: "2m ago",
@@ -23,7 +23,7 @@ const conversations = [
   {
     id: "2",
     name: "Sarah Chen",
-    avatar: "/placeholder.svg",
+    avatar: "/user.svg",
     lastMessage:
       "I have experience with UI/UX design and would love to collaborate on your project.",
     time: "1h ago",
@@ -32,7 +32,7 @@ const conversations = [
   {
     id: "3",
     name: "Miguel Rodriguez",
-    avatar: "/placeholder.svg",
+    avatar: "/user.svg",
     lastMessage: "Thanks for the information. I'll get back to you soon.",
     time: "3h ago",
     unread: false,
@@ -40,7 +40,7 @@ const conversations = [
   {
     id: "4",
     name: "Priya Sharma",
-    avatar: "/placeholder.svg",
+    avatar: "/user.svg",
     lastMessage: "Let's connect to discuss the hackathon project further.",
     time: "1d ago",
     unread: false,
@@ -48,7 +48,7 @@ const conversations = [
   {
     id: "5",
     name: "David Kim",
-    avatar: "/placeholder.svg",
+    avatar: "/user.svg",
     lastMessage: "I'm looking forward to working with you on the ML challenge.",
     time: "2d ago",
     unread: false,
@@ -153,7 +153,7 @@ export default function ConversationPage({
           <div className="flex items-center p-4 border-b">
             <Avatar className="h-10 w-10 mr-4">
               <AvatarImage
-                src={conversation.avatar || "/placeholder.svg"}
+                src={conversation.avatar || "/user.svg"}
                 alt={conversation.name}
               />
               <AvatarFallback>{conversation.name.charAt(0)}</AvatarFallback>

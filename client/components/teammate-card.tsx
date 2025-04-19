@@ -33,7 +33,7 @@ export function TeammateCard({
     <Card className="overflow-hidden">
       <CardHeader className="flex flex-row items-center gap-4 pb-2">
         <Avatar className="h-12 w-12">
-          <AvatarImage src={avatarUrl || "/placeholder.svg"} alt={name} />
+          <AvatarImage src={avatarUrl || "/user.svg"} alt={name} />
           <AvatarFallback>{name.charAt(0)}</AvatarFallback>
         </Avatar>
         <div className="grid gap-1">
