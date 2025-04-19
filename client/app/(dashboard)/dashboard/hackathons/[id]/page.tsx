@@ -63,11 +63,12 @@ const hackathons = {
   },
 };
 
-export default function HackathonDetailPage({
+export default async function HackathonDetailPage({
   params,
 }: {
   params: { id: string };
 }) {
+  // Ensure params.id is properly typed and used
   const hackathon = hackathons[params.id as keyof typeof hackathons];
 
   if (!hackathon) {
@@ -191,7 +192,7 @@ export default function HackathonDetailPage({
             {hackathon.interestedUsers.map((user) => (
               <div key={user.id} className="flex items-center gap-3">
                 <Avatar className="h-8 w-8">
-                  <AvatarImage src="/placeholder.svg" alt={user.name} />
+                  <AvatarImage alt={user.name} />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>

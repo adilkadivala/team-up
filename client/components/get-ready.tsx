@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
+import { useUser } from "@clerk/nextjs";
 
 const GetReady = () => {
+  const isSignedIn = useUser();
+
   return (
     <section className="py-20">
       <div className="container px-4 md:px-6">
@@ -21,13 +26,13 @@ const GetReady = () => {
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
-            <Link href="/signup">
+            <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
               <Button size="lg" className="gap-1 cursor-pointer">
                 <Sparkles className="h-4 w-4" />
                 Get Started for Free
               </Button>
             </Link>
-            <Link href="/browse">
+            <Link href={isSignedIn ? "/dashboard/browse" : "/sign-in"}>
               <Button size="lg" variant="outline" className="cursor-pointer">
                 Browse Teammates
               </Button>

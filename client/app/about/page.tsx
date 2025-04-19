@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Lightbulb } from "lucide-react";
+import { Lightbulb, User } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import Image from "next/image";
 
 export default function AboutPage() {
   return (
@@ -113,10 +114,18 @@ export default function AboutPage() {
             <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3">
               {[1, 2, 3].map((i) => (
                 <div key={i} className="flex flex-col items-center text-center">
-                  <div className="h-24 w-24 rounded-full bg-muted mb-4"></div>
+                  <div className="h-24 w-24 rounded-full bg-muted mb-4">
+                    <Image
+                      src={"/user.svg"}
+                      width={50}
+                      height={50}
+                      alt="profiles"
+                      className="mx-auto mt-4"
+                    />
+                  </div>
                   <h3 className="text-xl font-bold">Team Member {i}</h3>
                   <p className="text-sm text-muted-foreground mb-2">
-                    Co-Founder & Role
+                    Co-Founder & Manager
                   </p>
                   <p className="text-sm text-muted-foreground">
                     Brief bio about the team member and their background.
