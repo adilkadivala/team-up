@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,8 +14,76 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
+import { FormEvent, useState } from "react";
+import axios from "axios";
+
+const server_api = process.env.NEXT_PUBLIC_SERVER_API;
+
+console.log(server_api);
 
 export default function ContactPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
+  const [subscribe, setSubscribe] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    subject: "",
+    message: "",
+  });
+
+  const sendSubscription = async (e: FormEvent) => {
+    e.preventDefault();
+    console.log(server_api);
+    setIsLoading(true);
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const response = await axios.post(`${server_api}/subscribe`, {
+        firstname: subscribe.firstname,
+        lastname: subscribe.lastname,
+        email: subscribe.email,
+        subject: subscribe.subject,
+        message: subscribe.message,
+      });
+
+      console.log(response);
+
+      if (response.status === 200) {
+        setSubscribe({
+          email: "",
+          firstname: "",
+          lastname: "",
+          message: "",
+          subject: "",
+        });
+      } else {
+        console.log("error while inserting new data");
+      }
+    } catch (error) {
+      if (e instanceof Error) {
+        console.log(e.message);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // input handler
+
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setSubscribe((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -113,30 +183,41 @@ export default function ContactPage() {
 
               <div className="rounded-lg border bg-background p-8 shadow-sm">
                 <h3 className="text-xl font-bold mb-6">Send us a Message</h3>
-                <form className="space-y-6">
+                <form
+                  className="space-y-6"
+                  method="post"
+                  onSubmit={sendSubscription}
+                  encType="multipart/form-data"
+                >
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div className="space-y-2">
                       <label
-                        htmlFor="first-name"
+                        htmlFor="firstname"
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         First name
                       </label>
                       <Input
-                        id="first-name"
+                        id="firstname"
                         placeholder="Enter your first name"
+                        name="firstname"
+                        value={subscribe.firstname}
+                        onChange={handleInput}
                       />
                     </div>
                     <div className="space-y-2">
                       <label
-                        htmlFor="last-name"
+                        htmlFor="lastname"
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
                         Last name
                       </label>
                       <Input
-                        id="last-name"
+                        id="lastname"
+                        name="lastname"
                         placeholder="Enter your last name"
+                        value={subscribe.lastname}
+                        onChange={handleInput}
                       />
                     </div>
                   </div>
@@ -151,7 +232,10 @@ export default function ContactPage() {
                     <Input
                       id="email"
                       type="email"
+                      value={subscribe.email}
+                      name="email"
                       placeholder="Enter your email"
+                      onChange={handleInput}
                     />
                   </div>
 
@@ -162,7 +246,13 @@ export default function ContactPage() {
                     >
                       Subject
                     </label>
-                    <Input id="subject" placeholder="Enter the subject" />
+                    <Input
+                      id="subject"
+                      placeholder="Enter the subject"
+                      name="subject"
+                      onChange={handleInput}
+                      value={subscribe.subject}
+                    />
                   </div>
 
                   <div className="space-y-2">
@@ -176,6 +266,9 @@ export default function ContactPage() {
                       id="message"
                       placeholder="Enter your message"
                       className="min-h-[120px]"
+                      name="message"
+                      value={subscribe.message}
+                      onChange={handleInput}
                     />
                   </div>
 
