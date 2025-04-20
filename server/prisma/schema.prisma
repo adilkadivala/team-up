@@ -11,42 +11,42 @@ datasource db {
 }
 
 model User {
-  id                   String                  @id @default(uuid())
-  email                String                  @unique
-  password             String
-  name                 String
-  role                 String?
-  location             String?
-  bio                  String?                 @db.Text
-  avatarUrl            String?
-  githubUrl            String?
-  linkedinUrl          String?
-  createdAt            DateTime                @default(now())
-  updatedAt            DateTime                @updatedAt
-  skills               UserSkill[]
-  createdHackathons    Hackathon[]
-  hackathonInterests   UserHackathonInterest[]
-  createdTeams         Team[]
-  teamMemberships      TeamMember[]
-  sentMessages         Message[]               @relation("SentMessages")
-  conversations        ConversationParticipant[]
-  notifications        Notification[]
+  id                 String                    @id @default(uuid())
+  email              String                    @unique
+  password           String
+  name               String
+  role               String?
+  location           String?
+  bio                String?                   @db.Text
+  avatarUrl          String?
+  githubUrl          String?
+  linkedinUrl        String?
+  createdAt          DateTime                  @default(now())
+  updatedAt          DateTime                  @updatedAt
+  skills             UserSkill[]
+  createdHackathons  Hackathon[]
+  hackathonInterests UserHackathonInterest[]
+  createdTeams       Team[]
+  teamMemberships    TeamMember[]
+  sentMessages       Message[]                 @relation("SentMessages")
+  conversations      ConversationParticipant[]
+  notifications      Notification[]
 }
 
 model Skill {
-  id         String      @id @default(uuid())
-  name       String      @unique
-  category   String?
-  users      UserSkill[]
-  createdAt  DateTime    @default(now())
+  id        String      @id @default(uuid())
+  name      String      @unique
+  category  String?
+  users     UserSkill[]
+  createdAt DateTime    @default(now())
 }
 
 model UserSkill {
   userId           String
   skillId          String
   proficiencyLevel String?
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  skill            Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  user             User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill            Skill   @relation(fields: [skillId], references: [id], onDelete: Cascade)
 
   @@id([userId, skillId])
 }
@@ -117,12 +117,12 @@ model Team {
 }
 
 model TeamMember {
-  teamId    String
-  userId    String
-  role      String?
-  joinedAt  DateTime @default(now())
-  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  teamId   String
+  userId   String
+  role     String?
+  joinedAt DateTime @default(now())
+  team     Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([teamId, userId])
 }
@@ -163,4 +163,13 @@ model Notification {
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Subscribe {
+  id        String @id @default(uuid())
+  firstname String
+  lastname  String?
+  email     String @unique
+  subject   String?
+  message   String
 }
