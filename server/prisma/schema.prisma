@@ -1,0 +1,166 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                   String                  @id @default(uuid())
+  email                String                  @unique
+  password             String
+  name                 String
+  role                 String?
+  location             String?
+  bio                  String?                 @db.Text
+  avatarUrl            String?
+  githubUrl            String?
+  linkedinUrl          String?
+  createdAt            DateTime                @default(now())
+  updatedAt            DateTime                @updatedAt
+  skills               UserSkill[]
+  createdHackathons    Hackathon[]
+  hackathonInterests   UserHackathonInterest[]
+  createdTeams         Team[]
+  teamMemberships      TeamMember[]
+  sentMessages         Message[]               @relation("SentMessages")
+  conversations        ConversationParticipant[]
+  notifications        Notification[]
+}
+
+model Skill {
+  id         String      @id @default(uuid())
+  name       String      @unique
+  category   String?
+  users      UserSkill[]
+  createdAt  DateTime    @default(now())
+}
+
+model UserSkill {
+  userId           String
+  skillId          String
+  proficiencyLevel String?
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill            Skill    @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([userId, skillId])
+}
+
+model Hackathon {
+  id          String                  @id @default(uuid())
+  name        String
+  description String                  @db.Text
+  startDate   DateTime
+  endDate     DateTime
+  location    String?
+  isOnline    Boolean                 @default(false)
+  organizer   String
+  websiteUrl  String?
+  createdById String
+  createdAt   DateTime                @default(now())
+  updatedAt   DateTime                @updatedAt
+  createdBy   User                    @relation(fields: [createdById], references: [id])
+  tags        HackathonTag[]
+  prizes      HackathonPrize[]
+  interests   UserHackathonInterest[]
+  teams       Team[]
+}
+
+model Tag {
+  id         String         @id @default(uuid())
+  name       String         @unique
+  hackathons HackathonTag[]
+}
+
+model HackathonTag {
+  hackathonId String
+  tagId       String
+  hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
+  tag         Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([hackathonId, tagId])
+}
+
+model HackathonPrize {
+  id          String    @id @default(uuid())
+  hackathonId String
+  description String
+  value       String?
+  hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
+}
+
+model UserHackathonInterest {
+  userId      String
+  hackathonId String
+  createdAt   DateTime  @default(now())
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
+
+  @@id([userId, hackathonId])
+}
+
+model Team {
+  id          String       @id @default(uuid())
+  name        String
+  hackathonId String
+  createdById String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  hackathon   Hackathon    @relation(fields: [hackathonId], references: [id])
+  createdBy   User         @relation(fields: [createdById], references: [id])
+  members     TeamMember[]
+}
+
+model TeamMember {
+  teamId    String
+  userId    String
+  role      String?
+  joinedAt  DateTime @default(now())
+  team      Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([teamId, userId])
+}
+
+model Conversation {
+  id           String                    @id @default(uuid())
+  createdAt    DateTime                  @default(now())
+  participants ConversationParticipant[]
+  messages     Message[]
+}
+
+model ConversationParticipant {
+  conversationId String
+  userId         String
+  joinedAt       DateTime     @default(now())
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([conversationId, userId])
+}
+
+model Message {
+  id             String       @id @default(uuid())
+  conversationId String
+  senderId       String
+  content        String       @db.Text
+  createdAt      DateTime     @default(now())
+  readAt         DateTime?
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  sender         User         @relation("SentMessages", fields: [senderId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  userId    String
+  type      String
+  content   String   @db.Text
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
