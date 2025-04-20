@@ -11,7 +11,6 @@ import {
   Trophy,
   Settings,
   UserCircle,
-  LogOut,
   LogOutIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";

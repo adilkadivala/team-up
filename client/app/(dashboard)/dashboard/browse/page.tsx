@@ -210,7 +210,10 @@ export default function BrowsePage() {
 
         <Sheet>
           <SheetTrigger asChild>
-            <Button variant="outline" className="md:w-auto w-full gap-2">
+            <Button
+              variant="outline"
+              className="md:w-auto w-full gap-2 cursor-pointer"
+            >
               <Filter className="h-4 w-4" />
               Filters
               {(selectedSkills.length > 0 ||
@@ -242,6 +245,7 @@ export default function BrowsePage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => setSelectedSkills([])}
+                      className="cursor-pointer"
                     >
                       Clear ({selectedSkills.length})
                     </Button>
@@ -312,7 +316,7 @@ export default function BrowsePage() {
               <Button
                 onClick={clearFilters}
                 variant="outline"
-                className="w-full"
+                className="w-full cursor-pointer"
               >
                 Clear All Filters
               </Button>
@@ -334,7 +338,7 @@ export default function BrowsePage() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-4 w-4 ml-1 hover:bg-transparent"
+                className="h-4 w-4 ml-1 hover:bg-transparent cursor-pointer"
                 onClick={() => toggleSkill(skill)}
               >
                 <X className="h-3 w-3" />
@@ -348,7 +352,7 @@ export default function BrowsePage() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-4 w-4 ml-1 hover:bg-transparent"
+                className="h-4 w-4 ml-1 hover:bg-transparent cursor-pointer"
                 onClick={() => setSelectedLocation("")}
               >
                 <X className="h-3 w-3" />
@@ -362,7 +366,7 @@ export default function BrowsePage() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-4 w-4 ml-1 hover:bg-transparent"
+                className="h-4 w-4 ml-1 hover:bg-transparent cursor-pointer"
                 onClick={() => setRemoteOnly(false)}
               >
                 <X className="h-3 w-3" />
@@ -376,7 +380,7 @@ export default function BrowsePage() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-4 w-4 ml-1 hover:bg-transparent"
+                className="h-4 w-4 ml-1 hover:bg-transparent cursor-pointer"
                 onClick={() => setSelectedHackathon("")}
               >
                 <X className="h-3 w-3" />
@@ -388,7 +392,7 @@ export default function BrowsePage() {
             variant="ghost"
             size="sm"
             onClick={clearFilters}
-            className="ml-auto"
+            className="ml-auto cursor-pointer"
           >
             Clear all
           </Button>

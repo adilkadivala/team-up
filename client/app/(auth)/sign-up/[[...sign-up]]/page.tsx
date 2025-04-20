@@ -1,3 +1,4 @@
+"use client";
 import { Loader2 } from "lucide-react";
 import Image from "next/image";
 import { SignUp, ClerkLoaded, ClerkLoading } from "@clerk/nextjs";

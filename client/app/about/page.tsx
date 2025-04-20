@@ -1,11 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Lightbulb, User } from "lucide-react";
+import { Lightbulb } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import Image from "next/image";
+import { useUser } from "@clerk/nextjs";
 
 export default function AboutPage() {
+  const isSignedIn = useUser();
+
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -141,18 +146,24 @@ export default function AboutPage() {
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
                 <h2 className="text-3xl font-bold tracking-tighter">
-                  Join Our Community
+                  Team-Up with Telent
                 </h2>
                 <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl">
                   Be part of a growing network of innovators and creators.
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link href="/signup">
-                  <Button size="lg">Get Started</Button>
+                <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
+                  <Button size="lg" className="cursor-pointer">
+                    Get Started
+                  </Button>
                 </Link>
                 <Link href="/contact">
-                  <Button size="lg" variant="outline">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="cursor-pointer"
+                  >
                     Contact Us
                   </Button>
                 </Link>

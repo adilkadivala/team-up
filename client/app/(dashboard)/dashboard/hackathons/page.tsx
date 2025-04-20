@@ -14,6 +14,7 @@ import {
 import { Search, Plus } from "lucide-react";
 import { HackathonCard } from "@/components/hackathon-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
 
 // Mock data
 const hackathons = [
@@ -173,9 +174,11 @@ export default function HackathonsPage() {
           </SelectContent>
         </Select>
 
-        <Button className="gap-2">
-          <Plus className="h-4 w-4" />
-          Add Hackathon
+        <Button className="gap-2" asChild>
+          <Link href="/dashboard/hackathons/add">
+            <Plus className="h-4 w-4" />
+            Add Hackathon
+          </Link>
         </Button>
       </div>
 

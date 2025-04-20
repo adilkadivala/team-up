@@ -1,0 +1,335 @@
+"use client";
+
+import type React from "react";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Calendar } from "@/components/ui/calendar";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { CalendarIcon, ArrowLeft, Plus, X } from "lucide-react";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
+
+export default function AddHackathonPage() {
+  const router = useRouter();
+  const [isOnline, setIsOnline] = useState(false);
+  const [startDate, setStartDate] = useState<Date>();
+  const [endDate, setEndDate] = useState<Date>();
+  const [tags, setTags] = useState<string[]>([]);
+  const [newTag, setNewTag] = useState("");
+  const [prizes, setPrizes] = useState<string[]>([]);
+  const [newPrize, setNewPrize] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleAddTag = () => {
+    if (newTag.trim() && !tags.includes(newTag.trim())) {
+      setTags([...tags, newTag.trim()]);
+      setNewTag("");
+    }
+  };
+
+  const handleRemoveTag = (tagToRemove: string) => {
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
+
+  const handleAddPrize = () => {
+    if (newPrize.trim() && !prizes.includes(newPrize.trim())) {
+      setPrizes([...prizes, newPrize.trim()]);
+      setNewPrize("");
+    }
+  };
+
+  const handleRemovePrize = (prizeToRemove: string) => {
+    setPrizes(prizes.filter((prize) => prize !== prizeToRemove));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
+    // Get form data
+    const form = e.target as HTMLFormElement;
+    const formData = new FormData(form);
+
+    const hackathonData = {
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      organizer: formData.get("organizer") as string,
+      website: formData.get("website") as string,
+      location: isOnline ? "" : (formData.get("location") as string),
+      isOnline,
+      startDate,
+      endDate,
+      tags,
+      prizes,
+    };
+
+    // Here you would normally send this data to your API
+    console.log("Hackathon data to submit:", hackathonData);
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsSubmitting(false);
+      // Redirect to hackathons page after successful submission
+      router.push("/dashboard/hackathons");
+    }, 1000);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center gap-2">
+        <Button variant="ghost" size="sm" asChild>
+          <Link href="/dashboard/hackathons">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back
+          </Link>
+        </Button>
+      </div>
+
+      <div>
+        <h1 className="text-3xl font-bold tracking-tight">Add New Hackathon</h1>
+        <p className="text-muted-foreground">
+          Create a new hackathon event for the community.
+        </p>
+      </div>
+
+      <Card>
+        <form onSubmit={handleSubmit}>
+          <CardHeader>
+            <CardTitle>Hackathon Details</CardTitle>
+            <CardDescription>
+              Provide information about the hackathon event.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-6">
+            <div className="space-y-2">
+              <Label htmlFor="name">Hackathon Name *</Label>
+              <Input
+                id="name"
+                name="name"
+                placeholder="Enter hackathon name"
+                required
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="description">Description *</Label>
+              <Textarea
+                id="description"
+                name="description"
+                placeholder="Describe the hackathon, its theme, and goals"
+                className="min-h-[120px]"
+                required
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="organizer">Organizer *</Label>
+                <Input
+                  id="organizer"
+                  name="organizer"
+                  placeholder="Organization hosting the event"
+                  required
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="website">Website</Label>
+                <Input
+                  id="website"
+                  name="website"
+                  placeholder="https://example.com/hackathon"
+                  type="url"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="is-online"
+                  checked={isOnline}
+                  onCheckedChange={(checked) => setIsOnline(!!checked)}
+                />
+                <Label htmlFor="is-online">This is an online hackathon</Label>
+              </div>
+            </div>
+
+            {!isOnline && (
+              <div className="space-y-2">
+                <Label htmlFor="location">Location *</Label>
+                <Input
+                  id="location"
+                  name="location"
+                  placeholder="City, Country"
+                  required={!isOnline}
+                  disabled={isOnline}
+                />
+              </div>
+            )}
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Start Date *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !startDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {startDate
+                        ? format(startDate, "PPP")
+                        : "Select start date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={startDate}
+                      onSelect={setStartDate}
+                      initialFocus
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+              <div className="space-y-2">
+                <Label>End Date *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      className={cn(
+                        "w-full justify-start text-left font-normal",
+                        !endDate && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {endDate ? format(endDate, "PPP") : "Select end date"}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={endDate}
+                      onSelect={setEndDate}
+                      initialFocus
+                      disabled={(date) =>
+                        startDate ? date < startDate : false
+                      }
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Tags</Label>
+              <div className="flex flex-wrap gap-2 mb-2">
+                {tags.map((tag) => (
+                  <div
+                    key={tag}
+                    className="flex items-center bg-secondary text-secondary-foreground rounded-full px-3 py-1 text-sm"
+                  >
+                    {tag}
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-4 w-4 ml-1 hover:bg-transparent"
+                      onClick={() => handleRemoveTag(tag)}
+                    >
+                      <X className="h-3 w-3" />
+                      <span className="sr-only">Remove {tag}</span>
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add a tag (e.g., AI, Web3, Mobile)"
+                  value={newTag}
+                  onChange={(e) => setNewTag(e.target.value)}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && (e.preventDefault(), handleAddTag())
+                  }
+                />
+                <Button type="button" onClick={handleAddTag}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label>Prizes</Label>
+              <div className="flex flex-col gap-2 mb-2">
+                {prizes.map((prize, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between bg-secondary/50 rounded-md px-3 py-2"
+                  >
+                    <span>{prize}</span>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon"
+                      className="h-6 w-6"
+                      onClick={() => handleRemovePrize(prize)}
+                    >
+                      <X className="h-4 w-4" />
+                      <span className="sr-only">Remove prize</span>
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <div className="flex gap-2">
+                <Input
+                  placeholder="Add a prize (e.g., $5000 Grand Prize)"
+                  value={newPrize}
+                  onChange={(e) => setNewPrize(e.target.value)}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && (e.preventDefault(), handleAddPrize())
+                  }
+                />
+                <Button type="button" onClick={handleAddPrize}>
+                  <Plus className="h-4 w-4 mr-2" />
+                  Add
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Button variant="outline" type="button" asChild>
+              <Link href="/dashboard/hackathons">Cancel</Link>
+            </Button>
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Creating..." : "Create Hackathon"}
+            </Button>
+          </CardFooter>
+        </form>
+      </Card>
+    </div>
+  );
+}
