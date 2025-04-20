@@ -31,7 +31,10 @@ export async function sendWelcomeEmail(email: string, name: string) {
   }
 }
 
-export async function hackathonCreation(email: string, hackathonName: string) {
+export async function sendHackathonCreationEmail(
+  email: string,
+  hackathonName: string
+) {
   try {
     const data = await resend.emails.send({
       from: "TeamUp onboarding@resend.dev",

@@ -1,10 +1,10 @@
-export interface userRegisterInput {
+export interface UserRegisterInput {
   name: string;
   email: string;
   password: string;
 }
 
-export interface userLoginInput {
+export interface UserLoginInput {
   email: string;
   password: string;
 }
