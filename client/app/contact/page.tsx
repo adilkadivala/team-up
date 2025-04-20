@@ -19,8 +19,6 @@ import axios from "axios";
 
 const server_api = process.env.NEXT_PUBLIC_SERVER_API;
 
-console.log(server_api);
-
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +32,7 @@ export default function ContactPage() {
     message: "",
   });
 
-  const sendSubscription = async (e: FormEvent) => {
+  const createSubscription = async (e: FormEvent) => {
     e.preventDefault();
     console.log(server_api);
     setIsLoading(true);
@@ -73,7 +71,6 @@ export default function ContactPage() {
   };
 
   // input handler
-
   const handleInput = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -186,7 +183,7 @@ export default function ContactPage() {
                 <form
                   className="space-y-6"
                   method="post"
-                  onSubmit={sendSubscription}
+                  onSubmit={createSubscription}
                   encType="multipart/form-data"
                 >
                   <div className="grid gap-4 sm:grid-cols-2">

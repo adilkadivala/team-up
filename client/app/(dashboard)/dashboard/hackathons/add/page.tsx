@@ -2,7 +2,7 @@
 
 import type React from "react";
 
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,17 +27,39 @@ import { format } from "date-fns";
 import { CalendarIcon, ArrowLeft, Plus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import axios from "axios";
+
+const server_api = process.env.NEXT_PUBLIC_SERVER_API;
 
 export default function AddHackathonPage() {
   const router = useRouter();
+  const [startDate, setStartDate] = useState<Date | undefined>();
+  const [endDate, setEndDate] = useState<Date | undefined>();
   const [isOnline, setIsOnline] = useState(false);
-  const [startDate, setStartDate] = useState<Date>();
-  const [endDate, setEndDate] = useState<Date>();
   const [tags, setTags] = useState<string[]>([]);
   const [newTag, setNewTag] = useState("");
   const [prizes, setPrizes] = useState<string[]>([]);
   const [newPrize, setNewPrize] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [createHackathon, setCreateHackathon] = useState({
+    hackathonName: "",
+    description: "",
+    organizer: "",
+    website: "",
+    location: "",
+  });
+
+  // input handler
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setCreateHackathon((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -61,42 +83,37 @@ export default function AddHackathonPage() {
     setPrizes(prizes.filter((prize) => prize !== prizeToRemove));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setIsSubmitting(true);
+    setIsLoading(true);
 
-    // Get form data
-    const form = e.target as HTMLFormElement;
-    const formData = new FormData(form);
+    try {
+      const response = await axios.post(`${server_api}/create-hackathon`, {
+        ...createHackathon,
+        isOnline,
+        location: isOnline ? "" : createHackathon.location,
+        startDate,
+        endDate,
+        tags,
+        prizes,
+      });
 
-    const hackathonData = {
-      name: formData.get("name") as string,
-      description: formData.get("description") as string,
-      organizer: formData.get("organizer") as string,
-      website: formData.get("website") as string,
-      location: isOnline ? "" : (formData.get("location") as string),
-      isOnline,
-      startDate,
-      endDate,
-      tags,
-      prizes,
-    };
-
-    // Here you would normally send this data to your API
-    console.log("Hackathon data to submit:", hackathonData);
-
-    // Simulate API call
-    setTimeout(() => {
-      setIsSubmitting(false);
-      // Redirect to hackathons page after successful submission
-      router.push("/dashboard/hackathons");
-    }, 1000);
+      if (response.status === 200 || response.status === 201) {
+        router.push("/dashboard/hackathons");
+      } else {
+        console.error("Error:", response.data);
+      }
+    } catch (err) {
+      console.error("Submission error:", err);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-2">
-        <Button variant="ghost" size="sm" asChild>
+        <Button variant="ghost" size="sm" asChild className="cursor-pointer">
           <Link href="/dashboard/hackathons">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back
@@ -113,7 +130,7 @@ export default function AddHackathonPage() {
 
       <Card>
         <form onSubmit={handleSubmit}>
-          <CardHeader>
+          <CardHeader className="space-y-6 ">
             <CardTitle>Hackathon Details</CardTitle>
             <CardDescription>
               Provide information about the hackathon event.
@@ -121,12 +138,14 @@ export default function AddHackathonPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Hackathon Name *</Label>
+              <Label htmlFor="hackathonName">Hackathon Name *</Label>
               <Input
-                id="name"
-                name="name"
+                id="hackathonName"
+                name="hackathonName"
                 placeholder="Enter hackathon name"
                 required
+                value={createHackathon.hackathonName}
+                onChange={handleInput}
               />
             </div>
 
@@ -137,7 +156,9 @@ export default function AddHackathonPage() {
                 name="description"
                 placeholder="Describe the hackathon, its theme, and goals"
                 className="min-h-[120px]"
+                value={createHackathon.description}
                 required
+                onChange={handleInput}
               />
             </div>
 
@@ -149,6 +170,8 @@ export default function AddHackathonPage() {
                   name="organizer"
                   placeholder="Organization hosting the event"
                   required
+                  value={createHackathon.organizer}
+                  onChange={handleInput}
                 />
               </div>
               <div className="space-y-2">
@@ -158,6 +181,8 @@ export default function AddHackathonPage() {
                   name="website"
                   placeholder="https://example.com/hackathon"
                   type="url"
+                  value={createHackathon.website}
+                  onChange={handleInput}
                 />
               </div>
             </div>
@@ -181,6 +206,8 @@ export default function AddHackathonPage() {
                   name="location"
                   placeholder="City, Country"
                   required={!isOnline}
+                  value={createHackathon.location}
+                  onChange={handleInput}
                   disabled={isOnline}
                 />
               </div>
@@ -194,7 +221,7 @@ export default function AddHackathonPage() {
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal",
+                        "w-full justify-start text-left font-normal cursor-pointer",
                         !startDate && "text-muted-foreground"
                       )}
                     >
@@ -221,7 +248,7 @@ export default function AddHackathonPage() {
                     <Button
                       variant="outline"
                       className={cn(
-                        "w-full justify-start text-left font-normal",
+                        "w-full justify-start text-left font-normal cursor-pointer",
                         !endDate && "text-muted-foreground"
                       )}
                     >
@@ -257,7 +284,7 @@ export default function AddHackathonPage() {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-4 w-4 ml-1 hover:bg-transparent"
+                      className="h-4 w-4 ml-1 hover:bg-transparent cursor-pointer"
                       onClick={() => handleRemoveTag(tag)}
                     >
                       <X className="h-3 w-3" />
@@ -275,7 +302,11 @@ export default function AddHackathonPage() {
                     e.key === "Enter" && (e.preventDefault(), handleAddTag())
                   }
                 />
-                <Button type="button" onClick={handleAddTag}>
+                <Button
+                  type="button"
+                  onClick={handleAddTag}
+                  className="cursor-pointer"
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add
                 </Button>
@@ -295,7 +326,7 @@ export default function AddHackathonPage() {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-6 w-6"
+                      className="h-6 w-6 cursor-pointer"
                       onClick={() => handleRemovePrize(prize)}
                     >
                       <X className="h-4 w-4" />
@@ -313,19 +344,32 @@ export default function AddHackathonPage() {
                     e.key === "Enter" && (e.preventDefault(), handleAddPrize())
                   }
                 />
-                <Button type="button" onClick={handleAddPrize}>
+                <Button
+                  type="button"
+                  className="cursor-pointer"
+                  onClick={handleAddPrize}
+                >
                   <Plus className="h-4 w-4 mr-2" />
                   Add
                 </Button>
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button variant="outline" type="button" asChild>
+          <CardFooter className="flex justify-between space-y-6">
+            <Button
+              variant="outline"
+              type="reset"
+              asChild
+              className="cursor-pointer"
+            >
               <Link href="/dashboard/hackathons">Cancel</Link>
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Creating..." : "Create Hackathon"}
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="cursor-pointer"
+            >
+              {isLoading ? "Creating..." : "Create Hackathon"}
             </Button>
           </CardFooter>
         </form>
