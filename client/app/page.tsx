@@ -7,7 +7,7 @@ import GetReady from "@/components/get-ready";
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen flex-col px-3">
+    <div className="flex min-h-screen flex-col">
       <Navbar />
       <main className="flex-1">
         <Hero />

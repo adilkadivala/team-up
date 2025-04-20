@@ -65,10 +65,14 @@ export function HackathonCard({
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
-        <Button variant="outline" size="sm" asChild>
+        <Button variant="outline" size="sm" asChild className="cursor-pointer">
           <Link href={`/dashboard/hackathons/${id}`}>Details</Link>
         </Button>
-        <Button size="sm" variant={interested ? "destructive" : "default"}>
+        <Button
+          size="sm"
+          variant={interested ? "destructive" : "default"}
+          className="cursor-pointer"
+        >
           {interested ? "Remove Interest" : "I'm Interested"}
         </Button>
       </CardFooter>

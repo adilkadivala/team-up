@@ -9,7 +9,7 @@ const Footer = () => {
   const isSignedIn = useUser();
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="border-t bg-background px-3">
       <div className="container flex flex-col gap-6 py-8 md:flex-row md:items-center md:justify-between md:py-12">
         <div className="flex flex-col gap-2">
           <Link href="/" className="flex items-center gap-2">
@@ -60,12 +60,6 @@ const Footer = () => {
               >
                 Contact
               </Link>
-              <Link
-                href="/careers"
-                className="text-sm text-muted-foreground hover:text-foreground"
-              >
-                Careers
-              </Link>
             </nav>
           </div>
           <div className="space-y-2">
@@ -95,21 +89,21 @@ const Footer = () => {
           <div className="flex items-center gap-4">
             <Link
               href="https://x.com/adil_kadival"
-              className="text-muted-foreground hover:text-foreground"
+              className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground"
             >
               <span className="sr-only">Twitter</span>
               <Twitter />
             </Link>
             <Link
               href="https://github.com/adilkadivala"
-              className="text-muted-foreground hover:text-foreground"
+              className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground"
             >
               <span className="sr-only">GitHub</span>
               <Github />
             </Link>
             <Link
               href="https://www.linkedin.com/in/adilkadival/"
-              className="text-muted-foreground hover:text-foreground"
+              className="rounded-full bg-muted p-2 text-muted-foreground hover:text-foreground"
             >
               <span className="sr-only">LinkedIn</span>
               <Linkedin />
