@@ -1,17 +1,15 @@
 import { Request, Response } from "express";
 import * as hackathonService from "../services/hackathon.service";
-import { AuthenticatedRequest } from "../middleware/auth.middleware";
+import { AuthRequest, HackathonInput } from "../types";
 
-export const createHackathon = async (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
+export const createHackathon = async (req: AuthRequest, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "Authentication required" });
     }
 
-    const hackathonData = req.body;
+    const hackathonData = req.body as unknown as HackathonInput;
+
     const userId = req.user.id;
 
     const hackathon = await hackathonService.createHackathon(
@@ -61,7 +59,7 @@ export const getHackathonById = async (req: Request, res: Response) => {
 };
 
 export const toggleHackathonInterest = async (
-  req: AuthenticatedRequest,
+  req: AuthRequest,
   res: Response
 ) => {
   try {

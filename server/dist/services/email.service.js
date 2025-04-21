@@ -13,7 +13,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendWelcomeEmail = sendWelcomeEmail;
-exports.hackathonCreation = hackathonCreation;
+exports.sendHackathonCreationEmail = sendHackathonCreationEmail;
 exports.subscribtionCretion = subscribtionCretion;
 const resend_1 = require("resend");
 const config_1 = __importDefault(require("../config"));
@@ -22,7 +22,7 @@ function sendWelcomeEmail(email, name) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = yield resend.emails.send({
-                from: "TeamUp <notifications@teamup.com>",
+                from: "TeamUp onboarding@resend.dev",
                 to: email,
                 subject: "welcome to Team-Up",
                 html: `
@@ -48,11 +48,11 @@ function sendWelcomeEmail(email, name) {
         }
     });
 }
-function hackathonCreation(email, hackathonName) {
+function sendHackathonCreationEmail(email, hackathonName) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const data = yield resend.emails.send({
-                from: "TeamUp <notifications@teamup.com>",
+                from: "TeamUp onboarding@resend.dev",
                 to: email,
                 subject: `Your Hackathon "${hackathonName}" Has Been Created`,
                 html: `
@@ -75,23 +75,26 @@ function hackathonCreation(email, hackathonName) {
 }
 function subscribtionCretion(email, name) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log("📨 email service hit with:", email);
         try {
             const data = yield resend.emails.send({
-                from: "TeamUp <notifications@teamup.com>",
+                from: "TeamUp <onboarding@resend.dev>",
                 to: email,
-                subject: `congratulation "${name}" `,
+                subject: `Congrats ${name}!`,
                 html: `
-            <div>
-              <h1>Your Subscription at Team-up  Has Been Created!</h1>
-              <p>Thank you for networking with us!</p>
-              <p>The TeamUp Team</p>
-            </div>
-          `,
+        <div>
+          <h1>Hi ${name}, thanks for subscribing to TeamUp!</h1>
+          <h5>Your Subscription at Team-up Has Been Created!</h5>
+          <p>Thank you for networking with us!</p>
+          <p>— The TeamUp Team</p>
+        </div>
+      `,
             });
+            console.log("✅ Email sent:", data);
             return { success: true, data };
         }
         catch (error) {
-            console.log("error got from sendWelcomeEmail", error);
+            console.error("❌ Error sending email:", error);
             return { success: false, error };
         }
     });

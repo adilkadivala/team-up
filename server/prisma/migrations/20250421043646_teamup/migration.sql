@@ -2,7 +2,7 @@
 CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "name" TEXT NOT NULL,
     "role" TEXT,
     "location" TEXT,
@@ -72,9 +72,9 @@ CREATE TABLE "HackathonTag" (
 -- CreateTable
 CREATE TABLE "HackathonPrize" (
     "id" TEXT NOT NULL,
-    "hackathonId" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "value" TEXT,
+    "hackathonId" TEXT NOT NULL,
 
     CONSTRAINT "HackathonPrize_pkey" PRIMARY KEY ("id")
 );

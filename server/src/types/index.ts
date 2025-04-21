@@ -28,9 +28,16 @@ export interface JwtPayload {
 }
 
 export interface AuthRequest extends Request {
+  headers: Request["headers"] & {
+    authorization?: string;
+    "x-clerk-user-id"?: string;
+  };
   user?: {
     id: string;
     email: string;
+  };
+  params: {
+    [key: string]: string;
   };
 }
 

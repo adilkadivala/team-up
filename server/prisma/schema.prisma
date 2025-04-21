@@ -1,6 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
+// prisma/schema.prisma
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,7 +11,7 @@ datasource db {
 model User {
   id                 String                    @id @default(uuid())
   email              String                    @unique
-  password           String
+  password           String? // Made optional for Clerk users
   name               String
   role               String?
   location           String?
@@ -33,6 +31,7 @@ model User {
   notifications      Notification[]
 }
 
+// Rest of your schema remains the same
 model Skill {
   id        String      @id @default(uuid())
   name      String      @unique
@@ -88,9 +87,9 @@ model HackathonTag {
 
 model HackathonPrize {
   id          String    @id @default(uuid())
-  hackathonId String
   description String
   value       String?
+  hackathonId String
   hackathon   Hackathon @relation(fields: [hackathonId], references: [id], onDelete: Cascade)
 }
 
@@ -166,10 +165,10 @@ model Notification {
 }
 
 model Subscribe {
-  id        String @id @default(uuid())
+  id        String  @id @default(uuid())
   firstname String
   lastname  String?
-  email     String @unique
+  email     String  @unique
   subject   String?
   message   String
 }
