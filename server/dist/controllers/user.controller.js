@@ -32,22 +32,13 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.searchUsers = exports.updateUserProfile = exports.getUserProfile = void 0;
 const userService = __importStar(require("../services/user.service"));
-const getUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getUserProfile = async (req, res) => {
     try {
         const { id } = req.params;
-        const user = yield userService.getUserProfile(id);
+        const user = await userService.getUserProfile(id);
         res.status(200).json(user);
     }
     catch (error) {
@@ -57,36 +48,36 @@ const getUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.error("Error fetching user profile:", error);
         res.status(500).json({ message: "Error fetching user profile" });
     }
-});
+};
 exports.getUserProfile = getUserProfile;
-const updateUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateUserProfile = async (req, res) => {
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Authentication required" });
         }
         const userId = req.user.id;
         const userData = req.body;
-        const updatedUser = yield userService.updateUserProfile(userId, userData);
+        const updatedUser = await userService.updateUserProfile(userId, userData);
         res.status(200).json(updatedUser);
     }
     catch (error) {
         console.error("Error updating user profile:", error);
         res.status(500).json({ message: "Error updating user profile" });
     }
-});
+};
 exports.updateUserProfile = updateUserProfile;
-const searchUsers = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const searchUsers = async (req, res) => {
     try {
         const { search, skills, location, hackathonId } = req.query;
         const skillsArray = skills
             ? (Array.isArray(skills) ? skills : [skills])
             : undefined;
-        const users = yield userService.searchUsers(search, skillsArray, location, hackathonId);
+        const users = await userService.searchUsers(search, skillsArray, location, hackathonId);
         res.status(200).json(users);
     }
     catch (error) {
         console.error("Error searching users:", error);
         res.status(500).json({ message: "Error searching users" });
     }
-});
+};
 exports.searchUsers = searchUsers;

@@ -32,15 +32,6 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -48,7 +39,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCurrentUser = exports.syncClerkUser = exports.login = exports.register = void 0;
 const authService = __importStar(require("../services/auth.service"));
 const prisma_1 = __importDefault(require("../prisma"));
-const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
         if (!name || !email || !password) {
@@ -56,7 +47,7 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .status(400)
                 .json({ message: "Name, email, and password are required" });
         }
-        const result = yield authService.register({ name, email, password });
+        const result = await authService.register({ name, email, password });
         res.status(201).json(result);
     }
     catch (error) {
@@ -67,9 +58,9 @@ const register = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         res.status(500).json({ message: "Error registering user" });
     }
-});
+};
 exports.register = register;
-const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const login = async (req, res) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
@@ -77,7 +68,7 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 .status(400)
                 .json({ message: "Email and password are required" });
         }
-        const result = yield authService.login({ email, password });
+        const result = await authService.login({ email, password });
         res.status(200).json(result);
     }
     catch (error) {
@@ -88,15 +79,15 @@ const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         res.status(500).json({ message: "Error logging in" });
     }
-});
+};
 exports.login = login;
-const syncClerkUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const syncClerkUser = async (req, res) => {
     const { id, email, name, avatarUrl } = req.body;
     if (!id || !email || !name) {
         return res.status(400).json({ error: "Missing required user fields." });
     }
     try {
-        const user = yield prisma_1.default.user.upsert({
+        const user = await prisma_1.default.user.upsert({
             where: { id },
             update: {
                 email,
@@ -116,17 +107,16 @@ const syncClerkUser = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         console.error("Failed to sync Clerk user:", error);
         res.status(500).json({ error: "Failed to sync user." });
     }
-});
+};
 exports.syncClerkUser = syncClerkUser;
-const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+const getCurrentUser = async (req, res) => {
     try {
         // @ts-ignore - assuming req.user is set by auth middleware
-        const userId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.id;
+        const userId = req.user?.id;
         if (!userId) {
             return res.status(401).json({ message: "Unauthorized" });
         }
-        const user = yield prisma_1.default.user.findUnique({
+        const user = await prisma_1.default.user.findUnique({
             where: { id: userId },
             select: {
                 id: true,
@@ -151,5 +141,5 @@ const getCurrentUser = (req, res) => __awaiter(void 0, void 0, void 0, function*
         console.error("Error fetching current user:", error);
         res.status(500).json({ message: "Error fetching user data" });
     }
-});
+};
 exports.getCurrentUser = getCurrentUser;
