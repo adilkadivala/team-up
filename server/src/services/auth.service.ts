@@ -33,11 +33,9 @@ export const register = async (userData: UserRegisterInput) => {
   await sendWelcomeEmail(email, name);
 
   // Generate JWT token
-  const token = jwt.sign(
-    { userId: user.id, email: user.email },
-    config.jwtSecret,
-    { expiresIn: config.jwtExpiresIn }
-  );
+  const token = jwt.sign({ userId: user.id, email: user.email }, "secret", {
+    expiresIn: "2d",
+  });
 
   // Return user without password and token
   const { password: _, ...userWithoutPassword } = user;
@@ -57,18 +55,18 @@ export const login = async (credentials: UserLoginInput) => {
   }
 
   // Check password
+  if (!user.password) {
+    throw new Error("Password is missing for the user");
+  }
   const passwordMatch = await bcrypt.compare(password, user.password);
 
   if (!passwordMatch) {
     throw new Error("Invalid email or password");
   }
 
-  // Generate JWT token
-  const token = jwt.sign(
-    { userId: user.id, email: user.email },
-    config.jwtSecret,
-    { expiresIn: config.jwtExpiresIn }
-  );
+  const token = jwt.sign({ userId: user.id, email: user.email }, "secret", {
+    expiresIn: "2d",
+  });
 
   // Return user without password and token
   const { password: _, ...userWithoutPassword } = user;

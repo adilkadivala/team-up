@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import * as userService from "../services/user.service";
-import { AuthenticatedRequest } from "../middleware/auth.middleware";
+import { AuthRequest } from "../types";
 
 export const getUserProfile = async (req: Request, res: Response) => {
   try {
@@ -18,10 +18,7 @@ export const getUserProfile = async (req: Request, res: Response) => {
   }
 };
 
-export const updateUserProfile = async (
-  req: AuthenticatedRequest,
-  res: Response
-) => {
+export const updateUserProfile = async (req: AuthRequest, res: Response) => {
   try {
     if (!req.user) {
       return res.status(401).json({ message: "Authentication required" });

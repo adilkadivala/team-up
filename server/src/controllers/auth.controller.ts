@@ -1,3 +1,4 @@
+// src/controllers/auth.controller.ts
 import { Request, Response } from "express";
 import * as authService from "../services/auth.service";
 import prisma from "../prisma";
@@ -62,14 +63,12 @@ export const syncClerkUser = async (req: Request, res: Response) => {
         email,
         name,
         avatarUrl,
-        password: "clerk", // or null if you make it optional
       },
       create: {
         id,
         email,
         name,
         avatarUrl,
-        password: "clerk", // just to satisfy schema
       },
     });
 
@@ -77,5 +76,42 @@ export const syncClerkUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Failed to sync Clerk user:", error);
     res.status(500).json({ error: "Failed to sync user." });
+  }
+};
+
+export const getCurrentUser = async (req: Request, res: Response) => {
+  try {
+    // @ts-ignore - assuming req.user is set by auth middleware
+    const userId = req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        role: true,
+        location: true,
+        bio: true,
+        avatarUrl: true,
+        githubUrl: true,
+        linkedinUrl: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error("Error fetching current user:", error);
+    res.status(500).json({ message: "Error fetching user data" });
   }
 };

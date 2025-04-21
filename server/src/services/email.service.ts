@@ -67,8 +67,8 @@ export async function subscribtionCretion(email: string, name: string) {
       subject: `Congrats ${name}!`,
       html: `
         <div>
-          <p>Hi ${name}, thanks for subscribing to TeamUp!</p>
-          <h1>Your Subscription at Team-up Has Been Created!</h1>
+          <h1>Hi ${name}, thanks for subscribing to TeamUp!</h1>
+          <h5>Your Subscription at Team-up Has Been Created!</h5>
           <p>Thank you for networking with us!</p>
           <p>— The TeamUp Team</p>
         </div>

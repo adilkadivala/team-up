@@ -269,8 +269,12 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <Button type="submit" className="w-full cursor-pointer">
-                    Send Message
+                  <Button
+                    type="submit"
+                    className="w-full cursor-pointer"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "sending" : "Send Message"}
                   </Button>
                 </form>
               </div>

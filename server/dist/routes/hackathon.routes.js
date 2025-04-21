@@ -1,1 +1,10 @@
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const hackathon_controller_1 = require("../controllers/hackathon.controller");
+const router = (0, express_1.Router)();
+router.route("/create-hackathon").post(hackathon_controller_1.createHackathon);
+router.get("/get-hackathon", hackathon_controller_1.getHackathons);
+router.get("/get-hackathon/:id", hackathon_controller_1.getHackathonById);
+router.post("/get-hackathon/:id/interest", hackathon_controller_1.toggleHackathonInterest);
+exports.default = router;
