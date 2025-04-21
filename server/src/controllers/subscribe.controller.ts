@@ -27,7 +27,7 @@ export const createSubscription = async (req: Request, res: Response) => {
       if (error.message === "User with this email already exists") {
         return res.status(400).json({ message: error.message });
       }
+      res.status(500).json({ message: error.message });
     }
-    res.status(500).json({ message: "Error registering user" });
   }
 };
