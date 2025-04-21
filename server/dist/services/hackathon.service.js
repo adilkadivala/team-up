@@ -1,13 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -15,17 +6,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.toggleHackathonInterest = exports.getHackathonById = exports.getHackathons = exports.createHackathon = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
 const email_service_1 = require("../services/email.service");
-const createHackathon = (hackathonData, userId) => __awaiter(void 0, void 0, void 0, function* () {
+const createHackathon = async (hackathonData, userId) => {
     const { name, description, startDate, endDate, location, isOnline, organizer, websiteUrl, tags, prizes, } = hackathonData;
     // Get user
-    const user = yield prisma_1.default.user.findUnique({
+    const user = await prisma_1.default.user.findUnique({
         where: { id: userId },
     });
     if (!user) {
         throw new Error("User not found");
     }
     // Create hackathon
-    const hackathon = yield prisma_1.default.hackathon.create({
+    const hackathon = await prisma_1.default.hackathon.create({
         data: {
             name,
             description,
@@ -62,11 +53,11 @@ const createHackathon = (hackathonData, userId) => __awaiter(void 0, void 0, voi
         },
     });
     // Send confirmation email
-    yield (0, email_service_1.sendHackathonCreationEmail)(user.email, name);
+    await (0, email_service_1.sendHackathonCreationEmail)(user.email, name);
     return hackathon;
-});
+};
 exports.createHackathon = createHackathon;
-const getHackathons = (search, location, isOnline, tagFilter) => __awaiter(void 0, void 0, void 0, function* () {
+const getHackathons = async (search, location, isOnline, tagFilter) => {
     // Build filter conditions
     const where = {};
     if (search) {
@@ -91,7 +82,7 @@ const getHackathons = (search, location, isOnline, tagFilter) => __awaiter(void 
         };
     }
     // Get hackathons
-    const hackathons = yield prisma_1.default.hackathon.findMany({
+    const hackathons = await prisma_1.default.hackathon.findMany({
         where,
         include: {
             tags: {
@@ -107,10 +98,10 @@ const getHackathons = (search, location, isOnline, tagFilter) => __awaiter(void 
         },
     });
     return hackathons;
-});
+};
 exports.getHackathons = getHackathons;
-const getHackathonById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    const hackathon = yield prisma_1.default.hackathon.findUnique({
+const getHackathonById = async (id) => {
+    const hackathon = await prisma_1.default.hackathon.findUnique({
         where: { id },
         include: {
             tags: {
@@ -144,18 +135,18 @@ const getHackathonById = (id) => __awaiter(void 0, void 0, void 0, function* () 
         throw new Error("Hackathon not found");
     }
     return hackathon;
-});
+};
 exports.getHackathonById = getHackathonById;
-const toggleHackathonInterest = (hackathonId, userId) => __awaiter(void 0, void 0, void 0, function* () {
+const toggleHackathonInterest = async (hackathonId, userId) => {
     // Check if hackathon exists
-    const hackathon = yield prisma_1.default.hackathon.findUnique({
+    const hackathon = await prisma_1.default.hackathon.findUnique({
         where: { id: hackathonId },
     });
     if (!hackathon) {
         throw new Error("Hackathon not found");
     }
     // Check if user already expressed interest
-    const existingInterest = yield prisma_1.default.userHackathonInterest.findUnique({
+    const existingInterest = await prisma_1.default.userHackathonInterest.findUnique({
         where: {
             userId_hackathonId: {
                 userId,
@@ -165,7 +156,7 @@ const toggleHackathonInterest = (hackathonId, userId) => __awaiter(void 0, void 
     });
     if (existingInterest) {
         // Remove interest
-        yield prisma_1.default.userHackathonInterest.delete({
+        await prisma_1.default.userHackathonInterest.delete({
             where: {
                 userId_hackathonId: {
                     userId,
@@ -177,7 +168,7 @@ const toggleHackathonInterest = (hackathonId, userId) => __awaiter(void 0, void 
     }
     else {
         // Add interest
-        yield prisma_1.default.userHackathonInterest.create({
+        await prisma_1.default.userHackathonInterest.create({
             data: {
                 userId,
                 hackathonId,
@@ -185,5 +176,5 @@ const toggleHackathonInterest = (hackathonId, userId) => __awaiter(void 0, void 
         });
         return { interested: true };
     }
-});
+};
 exports.toggleHackathonInterest = toggleHackathonInterest;

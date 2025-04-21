@@ -1,4 +1,4 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 // import bodyparser from "body-parser";
 import config from "./config";
@@ -20,7 +20,7 @@ app.use("/", usersRoutes);
 app.use("/", clerkWebhook);
 
 // default
-app.get("/", (req, res) => {
+app.get("/", (req: Request, res: Response) => {
   res.status(200).json({ status: "hey! server is runnning well!!" });
 });
 
