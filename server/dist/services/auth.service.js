@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const prisma_1 = __importDefault(require("../prisma"));
 const email_service_1 = require("./email.service");
@@ -18,7 +18,7 @@ const register = async (userData) => {
         throw new Error("User with this email already exists");
     }
     // Hash password
-    const hashedPassword = await bcrypt_1.default.hash(password, 10);
+    const hashedPassword = await bcryptjs_1.default.hash(password, 10);
     // Create user
     const user = await prisma_1.default.user.create({
         data: {
@@ -51,7 +51,7 @@ const login = async (credentials) => {
     if (!user.password) {
         throw new Error("Password is missing for the user");
     }
-    const passwordMatch = await bcrypt_1.default.compare(password, user.password);
+    const passwordMatch = await bcryptjs_1.default.compare(password, user.password);
     if (!passwordMatch) {
         throw new Error("Invalid email or password");
     }
