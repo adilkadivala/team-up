@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "pnpm exec tsc",
+    "build": "pnpm install && pnpm exec tsc",
     "start": "node dist/index.js",
     "dev": "pnpm exec tsx watch src/index.ts",
     "db:push": "prisma db push",
