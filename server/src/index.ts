@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
-import bodyparser from "body-parser";
 import config from "./config";
 import subscribeRoute from "./routes/subscribe.route";
 import hackathonRoute from "./routes/hackathon.routes";
@@ -9,9 +8,14 @@ import clerkWebhook from "./routes/webhook.routes";
 
 const app = express();
 
-app.use(cors());
+const corsOpt = {
+  origin: config.clientUrl,
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
+
+app.use(cors(corsOpt));
 app.use(express.json());
-app.use(bodyparser.json());
 
 // routes
 app.use("/", subscribeRoute);
