@@ -1,7 +1,8 @@
 # 🚀 Hackathon Teammate Finder
 
-A full-stack project using **Next.js** for the frontend and **Express.js** for the backend to help users find teammates for hackathons.
+A full-stack project using **Next.js**, **Tailwind CSS**, and **Shadcn UI** for the frontend, and **Express.js** with **PostgreSQL (Neon)** for the backend. Built to help users find teammates for hackathons.
 
+---
 
 ## 🧾 Folder Structure
 
@@ -26,13 +27,6 @@ project/
 
 ## ⚙️ Getting Started
 
-### 📌 Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18 or later)
-- [MySQL](https://www.mysql.com/) (for the database)
-
----
-
 ## 🖥️ Project Setup
 
 ### 🔹 Client (Next.js)
@@ -50,17 +44,15 @@ pnpm run dev       # or yarn dev / pnpm dev / bun dev
 ### 🔸 Server (Express.js)
 
 ```bash
+
 cd server
-pnpm install express cors mysql2
+pnpm install
+pnpm run dev
 ```
 
-🛠️ Set up a MySQL database (e.g., `teammate_finder`) and update your credentials in `server/config/db.js`.
+🛠️ Set up a PostgreSQL database (e.g., on Neon) and update your credentials in server/config/db.ts.
 
-```bash
-node server.js
-```
-
-➡️ Backend runs at [http://localhost:5000](http://localhost:5000)
+➡️ Backend runs at [http://localhost:8000](http://localhost:5000)
 
 ---
 
@@ -92,17 +84,9 @@ The backend can be tested using tools like Postman at the API endpoints in `serv
 ## 🚀 Deployment
 
 - 🌐 **Frontend (Next.js):** Deploy easily using [Vercel](https://vercel.com/)
-- 🔧 **Backend (Express.js):** Deploy on [Render](https://render.com/) or [Heroku](https://www.heroku.com/)
+- 🔧 **Backend (Express.js):** Deploy on [Render](https://render.com/)
 
 Refer to the deployment guide or setup scripts for smooth CI/CD integration.
-
----
-
-## 📤 Submission Guidelines
-
-- ✅ **GitHub:** Submit your repository URL with complete source code and example `.env` if applicable.
-- 🔗 **Live Demo:** Include a deployed link (e.g., Vercel URL).
-- 📞 **Contact Info:** Add your Telegram ID, Twitter ID, and contact number.
 
 ---
 
