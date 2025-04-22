@@ -109,6 +109,7 @@ export default function UserProfilePage({
               <AvatarImage
                 src={user.avatar || "/user.svg"}
                 alt={user.name}
+                className="dark:bg-foreground p-2.5"
               />
               <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
             </Avatar>

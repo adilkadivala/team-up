@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,25 +18,60 @@ import { Badge } from "@/components/ui/badge";
 import { SkillBadge } from "@/components/skill-badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin, Globe, Calendar, Plus, X } from "lucide-react";
+import { FormEvent, useState } from "react";
+import axios from "axios";
+import { toast } from "sonner";
+import { handleInput } from "@/lib/utils";
+
+const server_api = process.env.NEXT_PUBLIC_SERVER_API;
 
 export default function ProfilePage() {
-  // Mock data
-  const userSkills = [
-    "React",
-    "TypeScript",
-    "Node.js",
-    "Express",
-    "MongoDB",
-    "Tailwind CSS",
-  ];
-  const suggestedSkills = [
-    "Next.js",
-    "GraphQL",
-    "PostgreSQL",
-    "Docker",
-    "AWS",
-    "Redux",
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [userData, setUserData] = useState({
+    name: "",
+    email: "",
+    role: "",
+    location: "",
+    bio: "",
+    github: "",
+    linkedin: "",
+  });
+
+  const [userSkill, setUserSkill] = useState([""]);
+
+  // submit data
+
+  const completeProfile = async (e: FormEvent) => {
+    setIsLoading(true);
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${server_api}/register`, {
+        ...userData,
+      });
+
+      console.log(response?.data);
+
+      if (response.status === 200) {
+        toast.success("profile saved successfully");
+        setUserData({
+          name: "",
+          email: "",
+          role: "",
+          location: "",
+          bio: "",
+          github: "",
+          linkedin: "",
+        });
+      }
+    } catch (error: any) {
+      console.log(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const userHackathons = [
     {
       name: "Global AI Hackathon",
@@ -67,75 +105,119 @@ export default function ProfilePage() {
 
         <TabsContent value="info">
           <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Profile Information</CardTitle>
-                <CardDescription>
-                  Update your personal information and preferences.
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
-                  <Avatar className="h-24 w-24">
-                    <AvatarImage src="/user.svg" alt="Profile" />
-                    <AvatarFallback>JD</AvatarFallback>
-                  </Avatar>
-                  <Button>Change Avatar</Button>
-                </div>
+            <form onSubmit={completeProfile}>
+              <Card>
+                <CardHeader>
+                  <CardTitle>Profile Information</CardTitle>
+                  <CardDescription>
+                    Update your personal information and preferences.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                    <Avatar className="h-24 w-24">
+                      <AvatarImage
+                        src={"/user.svg"}
+                        alt="Profile"
+                        className="dark:bg-foreground p-2.5"
+                      />
+                      <AvatarFallback>JD</AvatarFallback>
+                    </Avatar>
+                  </div>
 
-                <div className="grid gap-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="name">Full Name</Label>
-                      <Input id="name" defaultValue="John Doe" />
+                  <div className="grid gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="name">Full Name</Label>
+                        <Input
+                          id="name"
+                          name="name"
+                          placeholder="John Doe"
+                          value={userData.name}
+                          onChange={(e) => handleInput(e, setUserData)}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email</Label>
+                        <Input
+                          id="email"
+                          name="email"
+                          placeholder="john.doe@example.com"
+                          onChange={(e) => handleInput(e, setUserData)}
+                          value={userData.email}
+                        />
+                      </div>
                     </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <Label htmlFor="role">Role/Title</Label>
+                        <Input
+                          id="role"
+                          name="role"
+                          placeholder="Full Stack Developer"
+                          onChange={(e) => handleInput(e, setUserData)}
+                          value={userData.role}
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="location">Location</Label>
+                        <Input
+                          id="location"
+                          name="location"
+                          placeholder="San Francisco, CA"
+                          onChange={(e) => handleInput(e, setUserData)}
+                          value={userData.location}
+                        />
+                      </div>
+                    </div>
+
                     <div className="space-y-2">
-                      <Label htmlFor="email">Email</Label>
-                      <Input id="email" defaultValue="john.doe@example.com" />
+                      <Label htmlFor="bio">Bio</Label>
+                      <Textarea
+                        id="bio"
+                        name="bio"
+                        onChange={(e) => handleInput(e, setUserData)}
+                        value={userData.bio}
+                        rows={4}
+                        placeholder="Full Stack Developer with 5 years of experience. Passionate about building web applications and participating in hackathons."
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="github">GitHub Profile</Label>
+                      <Input
+                        id="github"
+                        name="github"
+                        onChange={(e) => handleInput(e, setUserData)}
+                        value={userData.github}
+                        placeholder="https://github.com/johndoe"
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="linkedin">LinkedIn Profile</Label>
+                      <Input
+                        id="linkedin"
+                        name="linkedin"
+                        onChange={(e) => handleInput(e, setUserData)}
+                        value={userData.linkedin}
+                        placeholder="https://linkedin.com/in/johndoe"
+                      />
                     </div>
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <Label htmlFor="role">Role/Title</Label>
-                      <Input id="role" defaultValue="Full Stack Developer" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="location">Location</Label>
-                      <Input id="location" defaultValue="San Francisco, CA" />
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="bio">Bio</Label>
-                    <Textarea
-                      id="bio"
-                      rows={4}
-                      defaultValue="Full Stack Developer with 5 years of experience. Passionate about building web applications and participating in hackathons."
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="github">GitHub Profile</Label>
-                    <Input
-                      id="github"
-                      defaultValue="https://github.com/johndoe"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="linkedin">LinkedIn Profile</Label>
-                    <Input
-                      id="linkedin"
-                      defaultValue="https://linkedin.com/in/johndoe"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button>Save Changes</Button>
-              </CardFooter>
-            </Card>
+                </CardContent>
+                <CardFooter>
+                  <Button
+                    className="cursor-pointer"
+                    type="submit"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? "Saving..." : "Save Changes"}
+                  </Button>
+                </CardFooter>
+              </Card>
+            </form>
           </div>
         </TabsContent>
 
@@ -152,7 +234,7 @@ export default function ProfilePage() {
                 <div className="space-y-2">
                   <Label>Your Skills</Label>
                   <div className="flex flex-wrap gap-2">
-                    {userSkills.map((skill) => (
+                    {userSkill.map((skill) => (
                       <Badge
                         key={skill}
                         className="flex items-center gap-1 pl-3"
@@ -174,7 +256,11 @@ export default function ProfilePage() {
                 <div className="space-y-2">
                   <Label>Add New Skills</Label>
                   <div className="flex gap-2">
-                    <Input placeholder="Enter a skill..." className="flex-1" />
+                    <Input
+                      placeholder="Enter a skill..."
+                      className="flex-1"
+                      name="userSkill"
+                    />
                     <Button>
                       <Plus className="h-4 w-4 mr-2" />
                       Add
@@ -182,13 +268,10 @@ export default function ProfilePage() {
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <Label>Suggested Skills</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {suggestedSkills.map((skill) => (
-                      <SkillBadge key={skill} skill={skill} />
-                    ))}
-                  </div>
+                <div className="flex items-center justify-between">
+                  <Button variant={"default"} className="cursor-pointer">
+                    Save Changes
+                  </Button>
                 </div>
               </CardContent>
             </Card>

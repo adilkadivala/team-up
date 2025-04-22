@@ -16,13 +16,14 @@ import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import { FormEvent, useState } from "react";
 import axios from "axios";
+import { toast } from "sonner";
+import { handleInput } from "@/lib/utils";
 
 const server_api = process.env.NEXT_PUBLIC_SERVER_API;
 
 export default function ContactPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<string | null>(null);
 
   const [subscribe, setSubscribe] = useState({
     firstname: "",
@@ -34,23 +35,16 @@ export default function ContactPage() {
 
   const createSubscription = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(server_api);
     setIsLoading(true);
     setError(null);
-    setSuccess(null);
 
     try {
       const response = await axios.post(`${server_api}/subscribe`, {
-        firstname: subscribe.firstname,
-        lastname: subscribe.lastname,
-        email: subscribe.email,
-        subject: subscribe.subject,
-        message: subscribe.message,
+        ...subscribe,
       });
 
-      console.log(response);
-
       if (response.status === 200) {
+        toast.success("subscription has been created successfully.");
         setSubscribe({
           email: "",
           firstname: "",
@@ -61,24 +55,17 @@ export default function ContactPage() {
       } else {
         console.log("error while inserting new data");
       }
-    } catch (error) {
-      if (e instanceof Error) {
-        console.log(e.message);
+    } catch (error: any) {
+      if (error?.response?.status === 400) {
+        setError("required");
+      } else if (error?.response?.status === 409) {
+        setError(error.response.data.message);
+      } else {
+        console.log(error.message);
       }
     } finally {
       setIsLoading(false);
     }
-  };
-
-  // input handler
-  const handleInput = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setSubscribe((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
   };
 
   return (
@@ -180,6 +167,7 @@ export default function ContactPage() {
 
               <div className="rounded-lg border bg-background p-8 shadow-sm">
                 <h3 className="text-xl font-bold mb-6">Send us a Message</h3>
+
                 <form
                   className="space-y-6"
                   method="post"
@@ -192,14 +180,17 @@ export default function ContactPage() {
                         htmlFor="firstname"
                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       >
-                        First name
-                      </label>
+                        First name *
+                      </label>{" "}
+                      {error?.includes("required") && (
+                        <span className="text-rose-400">{error}</span>
+                      )}
                       <Input
                         id="firstname"
                         placeholder="Enter your first name"
                         name="firstname"
                         value={subscribe.firstname}
-                        onChange={handleInput}
+                        onChange={(e) => handleInput(e, setSubscribe)}
                       />
                     </div>
                     <div className="space-y-2">
@@ -214,7 +205,7 @@ export default function ContactPage() {
                         name="lastname"
                         placeholder="Enter your last name"
                         value={subscribe.lastname}
-                        onChange={handleInput}
+                        onChange={(e) => handleInput(e, setSubscribe)}
                       />
                     </div>
                   </div>
@@ -224,16 +215,22 @@ export default function ContactPage() {
                       htmlFor="email"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      Email
-                    </label>
+                      Email *
+                    </label>{" "}
+                    {error?.includes("required") && (
+                      <span className="text-rose-400">{error}</span>
+                    )}
                     <Input
                       id="email"
                       type="email"
                       value={subscribe.email}
                       name="email"
                       placeholder="Enter your email"
-                      onChange={handleInput}
+                      onChange={(e) => handleInput(e, setSubscribe)}
                     />
+                    {error?.includes("email already exist") && (
+                      <span className="text-rose-400">{error}</span>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -247,7 +244,7 @@ export default function ContactPage() {
                       id="subject"
                       placeholder="Enter the subject"
                       name="subject"
-                      onChange={handleInput}
+                      onChange={(e) => handleInput(e, setSubscribe)}
                       value={subscribe.subject}
                     />
                   </div>
@@ -257,15 +254,18 @@ export default function ContactPage() {
                       htmlFor="message"
                       className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                     >
-                      Message
-                    </label>
+                      Message *
+                    </label>{" "}
+                    {error?.includes("required") && (
+                      <span className="text-rose-400">{error}</span>
+                    )}
                     <Textarea
                       id="message"
                       placeholder="Enter your message"
                       className="min-h-[120px]"
                       name="message"
                       value={subscribe.message}
-                      onChange={handleInput}
+                      onChange={(e) => handleInput(e, setSubscribe)}
                     />
                   </div>
 

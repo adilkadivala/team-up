@@ -32,31 +32,25 @@ var __importStar = (this && this.__importStar) || (function () {
         return result;
     };
 })();
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getCurrentUser = exports.syncClerkUser = exports.login = exports.register = void 0;
+exports.login = exports.register = void 0;
 const authService = __importStar(require("../services/auth.service"));
-const prisma_1 = __importDefault(require("../prisma"));
 const register = async (req, res) => {
+    console.log("hitte register");
     try {
-        const { name, email, password } = req.body;
-        if (!name || !email || !password) {
-            return res
-                .status(400)
-                .json({ message: "Name, email, and password are required" });
+        const { name, email, password = "teamup" } = req.body;
+        console.log(req.body);
+        if (!name || !email) {
+            return res.status(400).json({ message: "Name, and email are required" });
         }
         const result = await authService.register({ name, email, password });
-        res.status(201).json(result);
+        res.status(200).json(result);
     }
     catch (error) {
-        if (error instanceof Error) {
-            if (error.message === "User with this email already exists") {
-                return res.status(400).json({ message: error.message });
-            }
+        if (error.message === "User with this email already exists") {
+            return res.status(400).json({ message: error.message });
         }
-        res.status(500).json({ message: "Error registering user" });
+        res.status(500).json({ message: { message: error.message } });
     }
 };
 exports.register = register;
@@ -81,65 +75,3 @@ const login = async (req, res) => {
     }
 };
 exports.login = login;
-const syncClerkUser = async (req, res) => {
-    const { id, email, name, avatarUrl } = req.body;
-    if (!id || !email || !name) {
-        return res.status(400).json({ error: "Missing required user fields." });
-    }
-    try {
-        const user = await prisma_1.default.user.upsert({
-            where: { id },
-            update: {
-                email,
-                name,
-                avatarUrl,
-            },
-            create: {
-                id,
-                email,
-                name,
-                avatarUrl,
-            },
-        });
-        res.status(200).json({ success: true, user });
-    }
-    catch (error) {
-        console.error("Failed to sync Clerk user:", error);
-        res.status(500).json({ error: "Failed to sync user." });
-    }
-};
-exports.syncClerkUser = syncClerkUser;
-const getCurrentUser = async (req, res) => {
-    try {
-        // @ts-ignore - assuming req.user is set by auth middleware
-        const userId = req.user?.id;
-        if (!userId) {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-        const user = await prisma_1.default.user.findUnique({
-            where: { id: userId },
-            select: {
-                id: true,
-                email: true,
-                name: true,
-                role: true,
-                location: true,
-                bio: true,
-                avatarUrl: true,
-                githubUrl: true,
-                linkedinUrl: true,
-                createdAt: true,
-                updatedAt: true,
-            },
-        });
-        if (!user) {
-            return res.status(404).json({ message: "User not found" });
-        }
-        res.status(200).json(user);
-    }
-    catch (error) {
-        console.error("Error fetching current user:", error);
-        res.status(500).json({ message: "Error fetching user data" });
-    }
-};
-exports.getCurrentUser = getCurrentUser;

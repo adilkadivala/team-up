@@ -31,6 +31,7 @@ export function MessageList({ conversations, activeId }: MessageListProps) {
             <AvatarImage
               src={conversation.avatar || "/user.svg"}
               alt={conversation.name}
+              className="dark:bg-foreground p-1.5"
             />
             <AvatarFallback>{conversation.name.charAt(0)}</AvatarFallback>
           </Avatar>
