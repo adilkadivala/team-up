@@ -4,7 +4,6 @@ import config from "./config";
 import subscribeRoute from "./routes/subscribe.route";
 import hackathonRoute from "./routes/hackathon.routes";
 import usersRoutes from "./routes/auth.routes";
-import clerkWebhook from "./routes/webhook.routes";
 
 const app = express();
 
@@ -21,7 +20,6 @@ app.use(express.json());
 app.use("/", subscribeRoute);
 app.use("/", hackathonRoute);
 app.use("/", usersRoutes);
-app.use("/", clerkWebhook);
 
 // default
 app.get("/", (req: Request, res: Response) => {

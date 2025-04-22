@@ -69,7 +69,6 @@ export default function HackathonDetailPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  
   const { id } = use(params);
   const hackathon = hackathons[id as keyof typeof hackathons];
 
@@ -193,8 +192,12 @@ export default function HackathonDetailPage({
           <CardContent className="space-y-4">
             {hackathon.interestedUsers.map((user) => (
               <div key={user.id} className="flex items-center gap-3">
-                <Avatar className="h-8 w-8">
-                  <AvatarImage src="/user.svg" alt={user.name} />
+                <Avatar className="h-8 w-8 dark:bg-foreground">
+                  <AvatarImage
+                    src="/user.svg"
+                    className="size-6 pt-1.5 mx-auto"
+                    alt={user.name}
+                  />
                   <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
                 </Avatar>
                 <div>

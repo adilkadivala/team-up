@@ -10,13 +10,6 @@ const prisma_1 = __importDefault(require("../prisma"));
 const email_service_1 = require("./email.service");
 const register = async (userData) => {
     const { name, email, password } = userData;
-    // Check if user already exists
-    const existingUser = await prisma_1.default.user.findUnique({
-        where: { email },
-    });
-    if (existingUser) {
-        throw new Error("User with this email already exists");
-    }
     // Hash password
     const hashedPassword = await bcryptjs_1.default.hash(password, 10);
     // Create user

@@ -5,8 +5,8 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: teamupuser
-      POSTGRES_PASSWORD: teamupincrypted
+      POSTGRES_USER: teamup_owner
+      POSTGRES_PASSWORD: npg_xPF9W1rNojTd
       POSTGRES_DB: teamup
     volumes:
       - postgres-data:/var/lib/postgresql/data

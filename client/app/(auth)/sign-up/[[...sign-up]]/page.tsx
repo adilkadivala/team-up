@@ -17,7 +17,7 @@ export default function Page() {
         </div>
         <div className="flex items-center justify-center mt-8">
           <ClerkLoaded>
-            <SignUp path="/sign-up" />
+            <SignUp path="/sign-up" routing={"path"} />
           </ClerkLoaded>
           <ClerkLoading>
             <Loader2 className="animate-spin text-muted-foreground" />

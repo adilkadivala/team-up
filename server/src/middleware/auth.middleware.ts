@@ -34,7 +34,7 @@ export const authMiddleware = async (
         return res.status(404).json({ message: "User not found" });
       }
 
-      req.user = { id: user.id, email: user.email }; // 👈 match your AuthRequest type
+      req.user = { id: user.id, email: user.email };
       return next();
     }
 

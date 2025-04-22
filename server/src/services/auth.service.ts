@@ -1,21 +1,11 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma";
-import config from "../config";
 import { UserRegisterInput, UserLoginInput } from "../types";
 import { sendWelcomeEmail } from "./email.service";
 
 export const register = async (userData: UserRegisterInput) => {
   const { name, email, password } = userData;
-
-  // Check if user already exists
-  const existingUser = await prisma.user.findUnique({
-    where: { email },
-  });
-
-  if (existingUser) {
-    throw new Error("User with this email already exists");
-  }
 
   // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
