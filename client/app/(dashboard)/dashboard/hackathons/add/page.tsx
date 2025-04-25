@@ -25,7 +25,7 @@ import {
 } from "@/components/ui/popover";
 import { format } from "date-fns";
 import { CalendarIcon, ArrowLeft, Plus, X } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn, handleInput, handleInputCheckBox } from "@/lib/utils";
 import Link from "next/link";
 import axios from "axios";
 
@@ -43,23 +43,12 @@ export default function AddHackathonPage() {
   const [isLoading, setIsLoading] = useState(false);
 
   const [createHackathon, setCreateHackathon] = useState({
-    hackathonName: "",
+    name: "",
     description: "",
     organizer: "",
-    website: "",
+    websiteUrl: "",
     location: "",
   });
-
-  // input handler
-  const handleInput = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setCreateHackathon((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
 
   const handleAddTag = () => {
     if (newTag.trim() && !tags.includes(newTag.trim())) {
@@ -86,17 +75,26 @@ export default function AddHackathonPage() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
+    const token = localStorage.getItem("accessToken");
+    console.log(token);
     try {
-      const response = await axios.post(`${server_api}/create-hackathon`, {
-        ...createHackathon,
-        isOnline,
-        location: isOnline ? "" : createHackathon.location,
-        startDate,
-        endDate,
-        tags,
-        prizes,
-      });
+      const response = await axios.post(
+        `${server_api}/create-hackathon`,
+        {
+          ...createHackathon,
+          isOnline,
+          location: isOnline ? "" : createHackathon.location,
+          startDate,
+          endDate,
+          tags,
+          prizes,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200 || response.status === 201) {
         router.push("/dashboard/hackathons");
@@ -130,7 +128,7 @@ export default function AddHackathonPage() {
 
       <Card>
         <form onSubmit={handleSubmit}>
-          <CardHeader className="space-y-6 ">
+          <CardHeader className="py-6 ">
             <CardTitle>Hackathon Details</CardTitle>
             <CardDescription>
               Provide information about the hackathon event.
@@ -138,14 +136,14 @@ export default function AddHackathonPage() {
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="hackathonName">Hackathon Name *</Label>
+              <Label htmlFor="name">Hackathon Name *</Label>
               <Input
-                id="hackathonName"
-                name="hackathonName"
+                id="name"
+                name="name"
                 placeholder="Enter hackathon name"
                 required
-                value={createHackathon.hackathonName}
-                onChange={handleInput}
+                value={createHackathon.name}
+                onChange={(e) => handleInput(e, setCreateHackathon)}
               />
             </div>
 
@@ -158,7 +156,7 @@ export default function AddHackathonPage() {
                 className="min-h-[120px]"
                 value={createHackathon.description}
                 required
-                onChange={handleInput}
+                onChange={(e) => handleInput(e, setCreateHackathon)}
               />
             </div>
 
@@ -171,18 +169,18 @@ export default function AddHackathonPage() {
                   placeholder="Organization hosting the event"
                   required
                   value={createHackathon.organizer}
-                  onChange={handleInput}
+                  onChange={(e) => handleInput(e, setCreateHackathon)}
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="website">Website</Label>
+                <Label htmlFor="websiteUrl">Website</Label>
                 <Input
-                  id="website"
-                  name="website"
+                  id="websiteUrl"
+                  name="websiteUrl"
                   placeholder="https://example.com/hackathon"
                   type="url"
-                  value={createHackathon.website}
-                  onChange={handleInput}
+                  value={createHackathon.websiteUrl}
+                  onChange={(e) => handleInput(e, setCreateHackathon)}
                 />
               </div>
             </div>
@@ -207,7 +205,7 @@ export default function AddHackathonPage() {
                   placeholder="City, Country"
                   required={!isOnline}
                   value={createHackathon.location}
-                  onChange={handleInput}
+                  onChange={(e) => handleInput(e, setCreateHackathon)}
                   disabled={isOnline}
                 />
               </div>
@@ -355,7 +353,7 @@ export default function AddHackathonPage() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex justify-between space-y-6">
+          <CardFooter className="flex justify-between py-4">
             <Button
               variant="outline"
               type="reset"

@@ -2,15 +2,32 @@ import { Router } from "express";
 import {
   createHackathon,
   getHackathonById,
-  getHackathons,
+  getHackathonsbySearch,
+  getAllHackathon,
   toggleHackathonInterest,
 } from "../controllers/hackathon.controller";
+import { authenticate } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.route("/create-hackathon").post(createHackathon as any);
-router.get("/get-hackathon", getHackathons);
-router.get("/get-hackathon/:id", getHackathonById as any);
-router.post("/get-hackathon/:id/interest", toggleHackathonInterest as any);
+router
+  .route("/create-hackathon")
+  .post(authenticate as any, createHackathon as any);
+
+router
+  .route("/get-hackathon-byquery")
+  .get(authenticate as any, getHackathonsbySearch);
+
+router
+  .route("/get-hackathon/:id")
+  .get(authenticate as any, getHackathonById as any);
+
+router
+  .route("/get-hackathon/:id/interest")
+  .post(authenticate as any, toggleHackathonInterest as any);
+
+router
+  .route("/getallhackathons")
+  .get(authenticate as any, getAllHackathon as any);
 
 export default router;

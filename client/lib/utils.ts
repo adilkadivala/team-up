@@ -12,8 +12,24 @@ export function handleInput<T>(
 ) {
   const { name, value } = e.target;
 
+  setState((prevState) => {
+    if (typeof prevState === "string") {
+      return value as T;
+    }
+    return {
+      ...prevState,
+      [name]: value,
+    } as T;
+  });
+}
+
+export function handleInputCheckBox<T>(
+  e: React.ChangeEvent<HTMLInputElement>,
+  setState: React.Dispatch<React.SetStateAction<T>>
+) {
+  const { name, checked } = e.target; // Get the name and checked properties
   setState((prevState) => ({
     ...prevState,
-    [name]: value,
+    [name]: checked, // Update the state with the 'checked' value of the checkbox
   }));
 }

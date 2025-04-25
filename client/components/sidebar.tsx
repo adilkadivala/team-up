@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useClerk } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
@@ -13,8 +12,9 @@ import {
   UserCircle,
   LogOutIcon,
 } from "lucide-react";
+
 import { Button } from "@/components/ui/button";
-[];
+import { useValidateUser } from "@/store/user-context";
 
 const sidebarItems = [
   {
@@ -51,15 +51,15 @@ const sidebarItems = [
 
 export function Sidebar() {
   const pathname = usePathname();
-  const { signOut } = useClerk();
+
+  const checkUser = useValidateUser();
+  if (!checkUser) return null;
+  const { logout } = checkUser;
 
   return (
     <div className="hidden md:flex flex-col h-screen w-64 border-r bg-background">
       <div className="flex h-14 items-center border-b px-4">
-        <Link
-          href="/dashboard"
-          className="flex items-center gap-2 font-semibold"
-        >
+        <Link href="/" className="flex items-center gap-2 font-semibold">
           <Users className="h-6 w-6" />
           <span>TeamMate</span>
         </Link>
@@ -87,7 +87,7 @@ export function Sidebar() {
         <Button
           variant="outline"
           className="w-full justify-start gap-2 cursor-pointer"
-          onClick={() => signOut({ redirectUrl: "/" })}
+          onClick={() => logout()}
         >
           <LogOutIcon className="h-4 w-4" />
           Logout

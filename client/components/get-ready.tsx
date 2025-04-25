@@ -4,10 +4,12 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Sparkles } from "lucide-react";
-import { useUser } from "@clerk/nextjs";
+import { useValidateUser } from "@/store/user-context";
 
 const GetReady = () => {
-  const isSignedIn = useUser();
+  const validUser = useValidateUser();
+  if (!validUser) return null;
+  const { isAuthenticated } = validUser;
 
   return (
     <section className="py-20">
@@ -26,13 +28,13 @@ const GetReady = () => {
             </p>
           </div>
           <div className="flex flex-col gap-2 min-[400px]:flex-row">
-            <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
+            <Link href={isAuthenticated ? "/dashboard/brows" : "/sign-in"}>
               <Button size="lg" className="gap-1 cursor-pointer">
                 <Sparkles className="h-4 w-4" />
                 Get Started for Free
               </Button>
             </Link>
-            <Link href={isSignedIn ? "/dashboard/browse" : "/sign-in"}>
+            <Link href={isAuthenticated ? "/dashboard/browse" : "/sign-in"}>
               <Button size="lg" variant="outline" className="cursor-pointer">
                 Browse Teammates
               </Button>

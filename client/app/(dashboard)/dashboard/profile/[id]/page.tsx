@@ -70,6 +70,7 @@ export default function UserProfilePage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = use(params);
+
   const user = users[id as keyof typeof users];
 
   if (!user) {
