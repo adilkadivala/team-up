@@ -27,13 +27,9 @@ export interface JwtPayload {
   email: string;
 }
 
-import { Request } from "express";
-
 export interface AuthRequest extends Request {
   headers: Request["headers"] & {
     authorization?: string;
-    "x-clerk-user-id"?: string;
-    "x-clerk-user-email"?: string;
   };
   user?: {
     id: string;

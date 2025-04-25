@@ -3,8 +3,18 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchUsers = exports.updateUserProfile = exports.getUserProfile = void 0;
+exports.searchUsers = exports.updateUserProfile = exports.getUserProfile = exports.getAllUsers = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
+// get all users
+const getAllUsers = async () => {
+    const users = await prisma_1.default.user.findMany();
+    if (!users) {
+        throw new Error("users not found");
+    }
+    return users;
+};
+exports.getAllUsers = getAllUsers;
+// get specific user
 const getUserProfile = async (userId) => {
     const user = await prisma_1.default.user.findUnique({
         where: { id: userId },
@@ -46,6 +56,7 @@ const getUserProfile = async (userId) => {
     return user;
 };
 exports.getUserProfile = getUserProfile;
+// update profile
 const updateUserProfile = async (userId, userData) => {
     const { skills, ...userUpdateData } = userData;
     // Update user basic info
@@ -55,13 +66,11 @@ const updateUserProfile = async (userId, userData) => {
     });
     // If skills are provided, update them
     if (skills && Array.isArray(skills)) {
-        // Delete existing skills
         await prisma_1.default.userSkill.deleteMany({
             where: { userId },
         });
         // Add new skills
         for (const skillName of skills) {
-            // Find or create skill
             const skill = await prisma_1.default.skill.upsert({
                 where: { name: skillName },
                 update: {},
@@ -90,6 +99,7 @@ const updateUserProfile = async (userId, userData) => {
     return userWithSkills;
 };
 exports.updateUserProfile = updateUserProfile;
+// search user
 const searchUsers = async (search, skills, location, hackathonId) => {
     // Build filter conditions
     const where = {};

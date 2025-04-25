@@ -1,5 +1,15 @@
 import prisma from "../prisma";
 
+// get all users
+export const getAllUsers = async () => {
+  const users = await prisma.user.findMany();
+  if (!users) {
+    throw new Error("users not found");
+  }
+  return users;
+};
+
+// get specific user
 export const getUserProfile = async (userId: string) => {
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -43,6 +53,7 @@ export const getUserProfile = async (userId: string) => {
   return user;
 };
 
+// update profile
 export const updateUserProfile = async (userId: string, userData: any) => {
   const { skills, ...userUpdateData } = userData;
 
@@ -54,14 +65,12 @@ export const updateUserProfile = async (userId: string, userData: any) => {
 
   // If skills are provided, update them
   if (skills && Array.isArray(skills)) {
-    // Delete existing skills
     await prisma.userSkill.deleteMany({
       where: { userId },
     });
 
     // Add new skills
     for (const skillName of skills) {
-      // Find or create skill
       const skill = await prisma.skill.upsert({
         where: { name: skillName },
         update: {},
@@ -93,6 +102,7 @@ export const updateUserProfile = async (userId: string, userData: any) => {
   return userWithSkills;
 };
 
+// search user
 export const searchUsers = async (
   search?: string,
   skills?: string[],

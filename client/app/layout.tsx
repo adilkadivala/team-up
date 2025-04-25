@@ -3,8 +3,8 @@ import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/sonner";
+import { UserContextProvider } from "@/store/user-context";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,11 +28,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ClerkProvider>
-            {" "}
+          <UserContextProvider>
             <Toaster />
             {children}
-          </ClerkProvider>
+          </UserContextProvider>
         </ThemeProvider>
       </body>
     </html>

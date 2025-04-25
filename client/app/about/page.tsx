@@ -6,11 +6,8 @@ import { Lightbulb } from "lucide-react";
 import Navbar from "@/components/navbar";
 import Footer from "@/components/footer";
 import Image from "next/image";
-import { useUser } from "@clerk/nextjs";
 
 export default function AboutPage() {
-  const isSignedIn = useUser();
-
   return (
     <div className="flex min-h-screen flex-col">
       <Navbar />
@@ -153,7 +150,7 @@ export default function AboutPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
+                <Link href="/dashboard">
                   <Button size="lg" className="cursor-pointer">
                     Get Started
                   </Button>

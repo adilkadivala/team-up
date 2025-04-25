@@ -6,13 +6,16 @@ import React from "react";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";
 import { MobileNav } from "@/components/mobile-nav";
-import { useUser } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { useValidateUser } from "@/store/user-context";
 
 const Navbar = () => {
-  const { isSignedIn } = useUser();
   const pathname = usePathname();
+
+  const validUser = useValidateUser();
+  if (!validUser) return null;
+  const { isAuthenticated } = validUser;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-3">
@@ -60,8 +63,8 @@ const Navbar = () => {
           <ModeToggle />
           <div className="hidden md:flex items-center gap-4">
             <Button variant="outline" size="sm" asChild>
-              <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
-                {isSignedIn ? "dashboard" : "Login"}
+              <Link href={isAuthenticated ? "/dashboard" : "/sign-in"}>
+                {isAuthenticated ? "dashboard" : "sign-in"}
               </Link>
             </Button>
           </div>

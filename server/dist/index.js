@@ -9,6 +9,7 @@ const config_1 = __importDefault(require("./config"));
 const subscribe_route_1 = __importDefault(require("./routes/subscribe.route"));
 const hackathon_routes_1 = __importDefault(require("./routes/hackathon.routes"));
 const auth_routes_1 = __importDefault(require("./routes/auth.routes"));
+const user_routes_1 = __importDefault(require("./routes/user.routes"));
 const app = (0, express_1.default)();
 const corsOpt = {
     origin: config_1.default.clientUrl,
@@ -21,6 +22,7 @@ app.use(express_1.default.json());
 app.use("/", subscribe_route_1.default);
 app.use("/", hackathon_routes_1.default);
 app.use("/", auth_routes_1.default);
+app.use("/", user_routes_1.default);
 // default
 app.get("/", (req, res) => {
     res.status(200).json({ status: "hey! server is runnning well!!" });

@@ -19,6 +19,8 @@ export const createHackathon = async (
     prizes,
   } = hackathonData;
 
+  console.log(hackathonData);
+
   // Get user
   const user = await prisma.user.findUnique({
     where: { id: userId },
@@ -206,5 +208,17 @@ export const toggleHackathonInterest = async (
       },
     });
     return { interested: true };
+  }
+};
+
+export const getAllHackathon = async () => {
+  try {
+    const hackathons = await prisma.hackathon.findMany();
+    if (!hackathons) {
+      throw new Error("hackahons not found");
+    }
+    return hackathons;
+  } catch (error: any) {
+    console.log(error.message);
   }
 };

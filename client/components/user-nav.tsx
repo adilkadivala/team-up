@@ -13,11 +13,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ModeToggle } from "@/components/mode-toggle";
 import Link from "next/link";
-import { useClerk, useUser } from "@clerk/nextjs";
+import { useValidateUser } from "@/store/user-context";
 
 export function UserNav() {
-  const { user } = useUser();
-  const { signOut } = useClerk();
+  const validUser = useValidateUser();
+  if (!validUser) return null;
+  const { isAuthenticated, currentUser, logout } = validUser;
+
+  const fallbackAvtar = currentUser?.name;
+
   return (
     <div className="flex items-center gap-4">
       <ModeToggle />
@@ -30,7 +34,7 @@ export function UserNav() {
           >
             <Avatar className="size-4">
               <AvatarImage src={"/user.svg"} alt="User" />
-              <AvatarFallback>JD</AvatarFallback>
+              <AvatarFallback>{fallbackAvtar}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -38,10 +42,10 @@ export function UserNav() {
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">
-                {user?.fullName}
+                {currentUser?.name}
               </p>
               <p className="text-xs leading-none text-muted-foreground">
-                {user?.emailAddresses[0]?.emailAddress}
+                {currentUser?.email}
               </p>
             </div>
           </DropdownMenuLabel>
@@ -59,7 +63,7 @@ export function UserNav() {
             <Button
               variant="outline"
               className="w-full justify-start gap-2 cursor-pointer"
-              onClick={() => signOut({ redirectUrl: "/" })}
+              onClick={() => logout()}
             >
               Logout
             </Button>

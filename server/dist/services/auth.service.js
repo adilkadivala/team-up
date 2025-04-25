@@ -4,10 +4,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = exports.register = void 0;
+// auth.service.ts
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const prisma_1 = __importDefault(require("../prisma"));
 const email_service_1 = require("./email.service");
+const config_1 = __importDefault(require("../config"));
+// Use separate secrets for access and refresh tokens
+const ACCESS_TOKEN_SECRET = config_1.default.jwtSecret;
+const REFRESH_TOKEN_SECRET = config_1.default.jwtRefersh;
+// Generate access and refresh tokens
+const generateTokens = (user) => {
+    const accessToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, ACCESS_TOKEN_SECRET, { expiresIn: "7d" } // Change to 15 minutes
+    );
+    const refreshToken = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, REFRESH_TOKEN_SECRET, { expiresIn: "7d" } // Change to 7 days
+    );
+    return { accessToken, refreshToken };
+};
 const register = async (userData) => {
     const { name, email, password } = userData;
     // Hash password
@@ -22,13 +35,11 @@ const register = async (userData) => {
     });
     // Send welcome email
     await (0, email_service_1.sendWelcomeEmail)(email, name);
-    // Generate JWT token
-    const token = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, "secret", {
-        expiresIn: "2d",
-    });
-    // Return user without password and token
+    // Generate tokens
+    const { accessToken, refreshToken } = generateTokens(user);
+    // Return user without password and tokens
     const { password: _, ...userWithoutPassword } = user;
-    return { user: userWithoutPassword, token };
+    return { user: userWithoutPassword, accessToken, refreshToken };
 };
 exports.register = register;
 const login = async (credentials) => {
@@ -38,21 +49,20 @@ const login = async (credentials) => {
         where: { email },
     });
     if (!user) {
-        throw new Error("Invalid email or password");
+        throw new Error("Account not found");
     }
     // Check password
-    if (!user.password) {
+    if (!user?.password) {
         throw new Error("Password is missing for the user");
     }
     const passwordMatch = await bcryptjs_1.default.compare(password, user.password);
     if (!passwordMatch) {
         throw new Error("Invalid email or password");
     }
-    const token = jsonwebtoken_1.default.sign({ userId: user.id, email: user.email }, "secret", {
-        expiresIn: "2d",
-    });
-    // Return user without password and token
+    // Generate tokens
+    const { accessToken, refreshToken } = generateTokens(user);
+    // Return user without password and tokens
     const { password: _, ...userWithoutPassword } = user;
-    return { user: userWithoutPassword, token };
+    return { user: userWithoutPassword, accessToken, refreshToken };
 };
 exports.login = login;

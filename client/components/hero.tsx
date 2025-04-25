@@ -6,10 +6,13 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { HeroBackground } from "@/components/hero-background";
 import { AnimatedGradient } from "@/components/animated-gradient";
-import { useUser } from "@clerk/nextjs";
+import { useValidateUser } from "@/store/user-context";
 
 const Hero = () => {
-  const isSignedIn = useUser();
+  const validUser = useValidateUser();
+  if (!validUser) return null;
+  const { isAuthenticated } = validUser;
+
   return (
     <section className="relative overflow-hidden py-20 md:py-28">
       <AnimatedGradient />
@@ -29,12 +32,12 @@ const Hero = () => {
             to build winning projects at hackathons worldwide.
           </p>
           <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Link href={isSignedIn ? "/dashboard" : "/sign-in"}>
+            <Link href={isAuthenticated ? "/dashboard" : "/sign-in"}>
               <Button size="lg" className="h-12 px-8 gap-2 cursor-pointer">
                 Get Started <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
-            <Link href={isSignedIn ? "/dashboard/browse" : "/sign-in"}>
+            <Link href={isAuthenticated ? "/dashboard/browse" : "/sign-in"}>
               <Button
                 size="lg"
                 variant="outline"

@@ -1,13 +1,24 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetTrigger,SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { Menu } from "lucide-react"
+import { useState } from "react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { Menu } from "lucide-react";
+import { useValidateUser } from "@/store/user-context";
 
 export function MobileNav() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
+
+  const validUser = useValidateUser();
+  if (!validUser) return null;
+  const { isAuthenticated } = validUser;
 
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -44,14 +55,14 @@ export function MobileNav() {
             Contact
           </Link>
           <Link
-            href="/browse"
+            href={isAuthenticated ? "/dashboard/browse" : "/sign-in"}
             className="text-lg font-medium text-muted-foreground hover:text-primary"
             onClick={() => setOpen(false)}
           >
             Browse Teammates
           </Link>
           <Link
-            href="/hackathons"
+            href={isAuthenticated ? "/dashboard/hackathons" : "/sign-in"}
             className="text-lg font-medium text-muted-foreground hover:text-primary"
             onClick={() => setOpen(false)}
           >
@@ -59,16 +70,16 @@ export function MobileNav() {
           </Link>
         </div>
         <div className="mt-auto space-y-4 mb-8">
-          <Link href="/login" onClick={() => setOpen(false)}>
+          <Link
+            href={isAuthenticated ? "/dashboard" : "sign-in"}
+            onClick={() => setOpen(false)}
+          >
             <Button variant="outline" className="w-full">
-              Log in
+              {isAuthenticated ? "/dashboard" : "/sign-in"}
             </Button>
-          </Link>
-          <Link href="/signup" onClick={() => setOpen(false)}>
-            <Button className="w-full">Sign up</Button>
           </Link>
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

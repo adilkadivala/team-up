@@ -6,19 +6,23 @@ import { HackathonCard } from "@/components/hackathon-card";
 import { Button } from "@/components/ui/button";
 import { Users, Trophy, MessageSquare, ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useUser } from "@clerk/nextjs";
+import { useValidateUser } from "@/store/user-context";
 
 export default function DashboardPage() {
-  const { user, isLoaded } = useUser();
+  const validUser = useValidateUser();
+
+  if (!validUser) return null;
+
+  const { isAuthenticated, currentUser } = validUser;
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">
-          Welcome back {isLoaded ? ", " : ""}
+          Welcome back {""}
           <span className="text-2xl font-bold tracking-tight">
-            {user?.firstName}👋
+            {isAuthenticated && currentUser?.name}👋
           </span>
           ! Find teammates, join hackathons, and build amazing projects.
         </p>

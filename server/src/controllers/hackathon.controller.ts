@@ -24,7 +24,7 @@ export const createHackathon = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export const getHackathons = async (req: Request, res: Response) => {
+export const getHackathonsbySearch = async (req: Request, res: Response) => {
   try {
     const { search, location, isOnline, tag } = req.query;
 
@@ -79,5 +79,15 @@ export const toggleHackathonInterest = async (
     }
     console.error("Error toggling hackathon interest:", error);
     res.status(500).json({ message: "Error toggling hackathon interest" });
+  }
+};
+
+export const getAllHackathon = async (req: Request, res: Response) => {
+  try {
+    const hackathons = await hackathonService.getAllHackathon();
+    console.log(hackathons);
+    res.status(200).json({ hackathons });
+  } catch (error: any) {
+    console.log(error.message);
   }
 };

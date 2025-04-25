@@ -2,14 +2,16 @@ import { Router } from "express";
 import {
   getUserProfile,
   searchUsers,
+  getAllUsers,
   updateUserProfile,
 } from "../controllers/user.controller";
-import { authMiddleware } from "../middleware/auth.middleware";
+import { authenticate } from "../middleware/auth.middleware";
 
 const router = Router();
 
-router.route("/search").get(searchUsers);
-router.route("/user/:id").get(getUserProfile as any);
-router.route("/profile").put(authMiddleware as any, updateUserProfile as any);
+router.route("/search").get(authenticate as any, searchUsers);
+router.route("/users").get(authenticate as any, getAllUsers as any);
+router.route("/user/:id").get(authenticate as any, getUserProfile as any);
+router.route("/profile").post(authenticate as any, updateUserProfile as any);
 
 export default router;

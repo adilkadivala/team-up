@@ -3,11 +3,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toggleHackathonInterest = exports.getHackathonById = exports.getHackathons = exports.createHackathon = void 0;
+exports.getAllHackathon = exports.toggleHackathonInterest = exports.getHackathonById = exports.getHackathons = exports.createHackathon = void 0;
 const prisma_1 = __importDefault(require("../prisma"));
 const email_service_1 = require("../services/email.service");
 const createHackathon = async (hackathonData, userId) => {
     const { name, description, startDate, endDate, location, isOnline, organizer, websiteUrl, tags, prizes, } = hackathonData;
+    console.log(hackathonData);
     // Get user
     const user = await prisma_1.default.user.findUnique({
         where: { id: userId },
@@ -178,3 +179,16 @@ const toggleHackathonInterest = async (hackathonId, userId) => {
     }
 };
 exports.toggleHackathonInterest = toggleHackathonInterest;
+const getAllHackathon = async () => {
+    try {
+        const hackathons = await prisma_1.default.hackathon.findMany();
+        if (!hackathons) {
+            throw new Error("hackahons not found");
+        }
+        return hackathons;
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+};
+exports.getAllHackathon = getAllHackathon;

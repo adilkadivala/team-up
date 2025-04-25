@@ -33,8 +33,20 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.searchUsers = exports.updateUserProfile = exports.getUserProfile = void 0;
+exports.searchUsers = exports.updateUserProfile = exports.getUserProfile = exports.getAllUsers = void 0;
 const userService = __importStar(require("../services/user.service"));
+// get all user
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await userService.getAllUsers();
+        res.status(200).json({ users });
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+};
+exports.getAllUsers = getAllUsers;
+// specific user
 const getUserProfile = async (req, res) => {
     try {
         const { id } = req.params;
@@ -42,7 +54,7 @@ const getUserProfile = async (req, res) => {
         res.status(200).json(user);
     }
     catch (error) {
-        if (error instanceof Error && error.message === "User not found") {
+        if (error.message === "User not found") {
             return res.status(404).json({ message: error.message });
         }
         console.error("Error fetching user profile:", error);
@@ -50,13 +62,16 @@ const getUserProfile = async (req, res) => {
     }
 };
 exports.getUserProfile = getUserProfile;
+// update specific user
 const updateUserProfile = async (req, res) => {
+    console.log("updateUserProfile", req.user);
     try {
         if (!req.user) {
             return res.status(401).json({ message: "Authentication required" });
         }
         const userId = req.user.id;
         const userData = req.body;
+        console.log("userData", userData);
         const updatedUser = await userService.updateUserProfile(userId, userData);
         res.status(200).json(updatedUser);
     }
@@ -66,6 +81,7 @@ const updateUserProfile = async (req, res) => {
     }
 };
 exports.updateUserProfile = updateUserProfile;
+// search user
 const searchUsers = async (req, res) => {
     try {
         const { search, skills, location, hackathonId } = req.query;

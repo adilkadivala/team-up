@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.toggleHackathonInterest = exports.getHackathonById = exports.getHackathons = exports.createHackathon = void 0;
+exports.getAllHackathon = exports.toggleHackathonInterest = exports.getHackathonById = exports.getHackathonsbySearch = exports.createHackathon = void 0;
 const hackathonService = __importStar(require("../services/hackathon.service"));
 const createHackathon = async (req, res) => {
     try {
@@ -51,7 +51,7 @@ const createHackathon = async (req, res) => {
     }
 };
 exports.createHackathon = createHackathon;
-const getHackathons = async (req, res) => {
+const getHackathonsbySearch = async (req, res) => {
     try {
         const { search, location, isOnline, tag } = req.query;
         const hackathons = await hackathonService.getHackathons(search, location, isOnline === "true", tag);
@@ -62,7 +62,7 @@ const getHackathons = async (req, res) => {
         res.status(500).json({ message: "Error fetching hackathons" });
     }
 };
-exports.getHackathons = getHackathons;
+exports.getHackathonsbySearch = getHackathonsbySearch;
 const getHackathonById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -97,3 +97,14 @@ const toggleHackathonInterest = async (req, res) => {
     }
 };
 exports.toggleHackathonInterest = toggleHackathonInterest;
+const getAllHackathon = async (req, res) => {
+    try {
+        const hackathons = await hackathonService.getAllHackathon();
+        console.log(hackathons);
+        res.status(200).json({ hackathons });
+    }
+    catch (error) {
+        console.log(error.message);
+    }
+};
+exports.getAllHackathon = getAllHackathon;

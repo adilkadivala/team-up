@@ -33,13 +33,11 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.register = void 0;
+exports.refresh = exports.login = exports.register = void 0;
 const authService = __importStar(require("../services/auth.service"));
 const register = async (req, res) => {
-    console.log("hitte register");
     try {
-        const { name, email, password = "teamup" } = req.body;
-        console.log(req.body);
+        const { name, email, password } = req.body;
         if (!name || !email) {
             return res.status(400).json({ message: "Name, and email are required" });
         }
@@ -63,15 +61,37 @@ const login = async (req, res) => {
                 .json({ message: "Email and password are required" });
         }
         const result = await authService.login({ email, password });
-        res.status(200).json(result);
+        return res.status(200).json(result);
     }
     catch (error) {
-        if (error instanceof Error) {
-            if (error.message === "Invalid email or password") {
-                return res.status(401).json({ message: error.message });
-            }
+        console.error("Login Error:", error);
+        if (error.message === "Invalid email or password") {
+            return res.status(401).json({ message: error.message });
         }
-        res.status(500).json({ message: "Error logging in" });
+        if (error.message === "Account not found") {
+            return res.status(402).json({ message: error.message });
+        }
+        return res.status(500).json({ message: "Error logging in" });
     }
 };
 exports.login = login;
+const refresh = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res
+                .status(400)
+                .json({ message: "Email and password are required" });
+        }
+        const result = await authService.login({ email, password });
+        // Only return tokens
+        return res.status(200).json({
+            accessToken: result.accessToken,
+            refreshToken: result.refreshToken,
+        });
+    }
+    catch (err) {
+        return res.status(403).json({ message: err.message });
+    }
+};
+exports.refresh = refresh;

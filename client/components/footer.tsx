@@ -1,12 +1,14 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useValidateUser } from "@/store/user-context";
 import { Github, Linkedin, Twitter, Users } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
 const Footer = () => {
-  const isSignedIn = useUser();
+  const validUser = useValidateUser();
+  if (!validUser) return null;
+  const { isAuthenticated } = validUser;
 
   return (
     <footer className="border-t bg-background px-3">
@@ -26,19 +28,19 @@ const Footer = () => {
             <h4 className="font-medium">Platform</h4>
             <nav className="flex flex-col gap-2">
               <Link
-                href={isSignedIn ? "/dashboard/profile" : "/sign-in"}
+                href={isAuthenticated ? "/dashboard/profiles" : "/sign-in"}
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
                 Your Profile
               </Link>
               <Link
-                href={isSignedIn ? "/dashboard/hackathons" : "/sign-in"}
+                href={isAuthenticated ? "/dashboard/hackathons" : "/sign-in"}
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
                 Hackathons
               </Link>
               <Link
-                href={isSignedIn ? "/dashboard/browse" : "/sign-in"}
+                href={isAuthenticated ? "/dashboard/browse" : "/sign-in"}
                 className="text-sm text-muted-foreground hover:text-foreground"
               >
                 Browse Teammates
